@@ -126,9 +126,9 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "pypi": "spyq-guard",
+      "pypi": "spyq",
       "cloneCommand": "git clone https://github.com/wronai/spyq.git",
-      "installCommand": "pip install spyq-guard"
+      "installCommand": "pip install spyq"
     },
     {
       "name": "www",

@@ -1,0 +1,83 @@
+/* General Styles */
+body {
+    @apply bg-gray-50 min-h-screen;
+}
+
+/* Repository Card Styles */
+.repo-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-700;
+}
+
+.repo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.language-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+/* Filter Button Styles */
+.filter-btn {
+    transition: all 0.2s ease;
+    @apply px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white;
+}
+
+.filter-btn.active {
+    @apply bg-blue-600 text-white;
+}
+
+/* Dark Mode Toggle */
+.dark-mode-toggle {
+    @apply p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors;
+}
+
+/* Copy Button */
+.copy-btn {
+    @apply transition-colors;
+}
+
+.copy-tooltip {
+    @apply absolute z-10 invisible group-hover:visible bg-gray-900 text-white text-xs rounded py-1 px-2 -top-8 left-1/2 transform -translate-x-1/2;
+}
+
+/* Dark mode styles */
+.dark {
+    @apply bg-gray-900 text-white;
+}
+
+.dark .repo-card {
+    @apply bg-gray-800 border-gray-700;
+}
+
+.dark .text-gray-600 {
+    @apply text-gray-300;
+}
+
+.dark .text-gray-800 {
+    @apply text-white;
+}
+
+.dark .bg-white {
+    @apply bg-gray-800;
+}
+
+.dark .border-gray-200 {
+    @apply border-gray-700;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        @apply px-4;
+    }
+    
+    .filter-btn {
+        @apply px-3 py-1 text-sm;
+    }
+}

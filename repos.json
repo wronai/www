@@ -61,9 +61,9 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "pypi": "gollm-ai",
+      "pypi": "gollm",
       "cloneCommand": "git clone https://github.com/wronai/gollm.git",
-      "installCommand": "pip install gollm-ai"
+      "installCommand": "pip install gollm"
     },
     {
       "name": "llm",

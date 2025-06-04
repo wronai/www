@@ -1,83 +1,192 @@
-/* General Styles */
-body {
-    @apply bg-gray-50 min-h-screen;
+/* Modern CSS Reset and Base Styles */
+:root {
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --dark-bg: #0f172a;
+  --dark-card: #1e293b;
+  --dark-border: #334155;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --text-light: #f8fafc;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Repository Card Styles */
+/* Base Styles */
+body {
+  @apply bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 min-h-screen text-gray-800 dark:text-gray-200 transition-colors duration-300;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold leading-tight tracking-tight text-gray-900 dark:text-white;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+h1 { @apply text-4xl md:text-5xl; }
+h2 { @apply text-3xl md:text-4xl; }
+h3 { @apply text-2xl md:text-3xl; }
+
+p {
+  @apply text-gray-600 dark:text-gray-300 leading-relaxed;
+}
+
+/* Layout Components */
+.container {
+  @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl w-full;
+}
+
+/* Card Styles */
 .repo-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    @apply bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-700;
+  @apply relative bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700/50 overflow-hidden;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .repo-card {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .repo-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
 }
 
+/* Language Dot */
 .language-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 5px;
+  @apply inline-block w-3 h-3 rounded-full mr-2;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
-/* Filter Button Styles */
+/* Filter Buttons */
 .filter-btn {
-    transition: all 0.2s ease;
-    @apply px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white;
+  @apply px-4 py-2 rounded-full font-medium text-sm transition-all duration-200 ease-out;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: var(--text-secondary);
+}
+
+.dark .filter-btn {
+  background: rgba(30, 41, 59, 0.7);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-light);
+}
+
+.filter-btn:hover {
+  @apply bg-opacity-90 shadow-md;
+  transform: translateY(-1px);
 }
 
 .filter-btn.active {
-    @apply bg-blue-600 text-white;
+  @apply bg-indigo-600 text-white border-transparent shadow-md;
+}
+
+/* Action Buttons */
+.btn {
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 ease-out inline-flex items-center justify-center;
+}
+
+.btn-primary {
+  @apply bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm hover:shadow-md;
+}
+
+.btn-outline {
+  @apply border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700;
 }
 
 /* Dark Mode Toggle */
-.dark-mode-toggle {
-    @apply p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors;
+.theme-toggle {
+  @apply p-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:shadow-md transition-all duration-200;
 }
 
 /* Copy Button */
 .copy-btn {
-    @apply transition-colors;
+  @apply p-1.5 rounded-md transition-colors text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400;
 }
 
 .copy-tooltip {
-    @apply absolute z-10 invisible group-hover:visible bg-gray-900 text-white text-xs rounded py-1 px-2 -top-8 left-1/2 transform -translate-x-1/2;
+  @apply absolute z-20 invisible opacity-0 bg-gray-900 text-white text-xs font-medium py-1 px-2 rounded whitespace-nowrap transition-all duration-200;
+  transform: translate(-50%, -10px);
+  pointer-events: none;
 }
 
-/* Dark mode styles */
-.dark {
-    @apply bg-gray-900 text-white;
+.group:hover .copy-tooltip {
+  @apply visible opacity-100;
+  transform: translate(-50%, -12px);
 }
 
-.dark .repo-card {
-    @apply bg-gray-800 border-gray-700;
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.dark .text-gray-600 {
-    @apply text-gray-300;
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out forwards;
 }
 
-.dark .text-gray-800 {
-    @apply text-white;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-.dark .bg-white {
-    @apply bg-gray-800;
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-900;
 }
 
-.dark .border-gray-200 {
-    @apply border-gray-700;
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-700 rounded-full;
 }
 
-/* Responsive adjustments */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-600;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-    .container {
-        @apply px-4;
-    }
-    
-    .filter-btn {
-        @apply px-3 py-1 text-sm;
-    }
+  .container {
+    @apply px-4;
+  }
+  
+  .filter-btn {
+    @apply px-3 py-1.5 text-sm;
+  }
+  
+  .repo-card {
+    @apply rounded-lg;
+  }
+}
+
+/* Loading Skeleton */
+.skeleton {
+  @apply bg-gray-200 dark:bg-gray-700 animate-pulse rounded-lg;
+}
+
+/* Custom Utilities */
+.backdrop-blur {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass {
+  background: rgba(30, 41, 59, 0.7);
+  border-color: rgba(255, 255, 255, 0.05);
 }

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WronAI Projects</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .repo-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .repo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .language-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        .filter-btn {
+            transition: all 0.2s ease;
+        }
+        .filter-btn.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-12">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">WronAI Projects</h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Open-source AI and ML projects focused on edge computing, LLMs, and code quality tools.
+                Built by the community, for the community.
+            </p>
+            <div class="mt-8 flex flex-wrap justify-center gap-4" id="filter-buttons">
+                <button class="filter-btn px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300" data-filter="all">All</button>
+                <!-- Language filters will be added dynamically -->
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="repos-container">
+            <!-- Repository cards will be added dynamically -->
+        </div>
+    </div>
+
+    <script>
+        // Repository data
+        const repos = [
+            {
+                name: "allama",
+                description: "For All LLM benchmark",
+                url: "https://github.com/wronai/allama",
+                website: "https://wronai.github.io/allama/",
+                updatedAt: "2025-06-04T12:41:39Z",
+                isArchived: false,
+                isFork: false,
+                language: "Python"
+            },
+            {
+                name: "assistant",
+                description: "WronAI - Edge Computing AI Assistant",
+                url: "https://github.com/wronai/assistant",
+                website: "https://wronai.github.io/assistant/",
+                updatedAt: "2025-05-29T22:50:13Z",
+                isArchived: false,
+                isFork: false,
+                language: "Other"
+            },
+            {
+                name: "docker-platform",
+                description: "Enterprise-grade secure media storage with AI analysis, role-based access, and comprehensive monitoring.",
+                url: "https://github.com/wronai/docker-platform",
+                website: "https://wronai.github.io/docker-platform/",
+                updatedAt: "2025-05-30T13:51:48Z",
+                isArchived: false,
+                isFork: false,
+                language: "Go"
+            },
+            {
+                name: "docs",
+                description: "WronAI - Kompletna Dokumentacja Tworzenia LLM",
+                url: "https://github.com/wronai/docs",
+                website: "https://wronai.github.io/docs/",
+                updatedAt: "2025-05-29T22:48:29Z",
+                isArchived: false,
+                isFork: false,
+                language: "Documentation"
+            },
+            {
+                name: "gollm",
+                description: "goLLM - Go Learn, Lead, Master! 🚀 Intelligent Python code quality guardian with LLM integration, automated TODO management and CHANGELOG generation.",
+                url: "https://github.com/wronai/gollm",
+                website: "https://wronai.github.io/gollm/",
+                updatedAt: "2025-06-04T13:43:13Z",
+                isArchived: false,
+                isFork: false,
+                language: "Python"
+            },
+            {
+                name: "llm",
+                description: "wronAI LLM",
+                url: "https://github.com/wronai/llm",
+                website: "https://wronai.github.io/llm/",
+                updatedAt: "2025-05-29T22:49:24Z",
+                isArchived: false,
+                isFork: false,
+                language: "Other"
+            },
+            {
+                name: "llm-demo",
+                description: "Minimalne rozwiązanie z Ollama + Streamlit, by stworzyć własny model LLM",
+                url: "https://github.com/wronai/llm-demo",
+                website: "",
+                updatedAt: "2025-06-04T15:37:25Z",
+                isArchived: false,
+                isFork: false,
+                language: "Python"
+            },
+            {
+                name: "ollama",
+                description: "Serve ollama on embedded without pain",
+                url: "https://github.com/wronai/ollama",
+                website: "https://wronai.github.io/ollama/",
+                updatedAt: "2025-06-04T12:54:38Z",
+                isArchived: false,
+                isFork: false,
+                language: "Shell"
+            },
+            {
+                name: "quality",
+                description: "How to improve code quality when coding LLM vibe?",
+                url: "https://github.com/wronai/quality",
+                website: "https://wronai.github.io/quality/",
+                updatedAt: "2025-05-31T21:50:38Z",
+                isArchived: false,
+                isFork: false,
+                language: "Python"
+            },
+            {
+                name: "spyq",
+                description: "SPYQ - Shell Python Quality Guard is a command-line tool for managing and enforcing code quality in Python projects.",
+                url: "https://github.com/wronai/spyq",
+                website: "https://wronai.github.io/spyq/",
+                updatedAt: "2025-05-31T12:23:02Z",
+                isArchived: false,
+                isFork: false,
+                language: "Python"
+            },
+            {
+                name: "www",
+                description: "Edge computing LLM for embedded devices such RPI",
+                url: "https://github.com/wronai/www",
+                website: "https://wronai.github.io/www/",
+                updatedAt: "2025-05-29T22:47:51Z",
+                isArchived: false,
+                isFork: false,
+                language: "Other"
+            }
+        ];
+
+        // Language colors mapping
+        const languageColors = {
+            'Python': '#3572A5',
+            'JavaScript': '#f1e05a',
+            'TypeScript': '#2b7489',
+            'Go': '#00ADD8',
+            'Shell': '#89e051',
+            'Documentation': '#555',
+            'Other': '#6e5494'
+        };
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            renderRepos();
+            setupFilters();
+        });
+
+        // Render all repositories
+        function renderRepos(filterLanguage = 'all') {
+            const container = document.getElementById('repos-container');
+            container.innerHTML = '';
+
+            const filteredRepos = filterLanguage === 'all' 
+                ? repos 
+                : repos.filter(repo => repo.language === filterLanguage);
+
+            filteredRepos.forEach(repo => {
+                const card = createRepoCard(repo);
+                container.appendChild(card);
+            });
+        }
+
+
+        // Create a repository card element
+        function createRepoCard(repo) {
+            const card = document.createElement('div');
+            card.className = 'repo-card bg-white rounded-lg shadow-md overflow-hidden border border-gray-200';
+            
+            const color = languageColors[repo.language] || '#6e5494';
+            const updated = formatDate(repo.updatedAt);
+            
+            card.innerHTML = `
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-bold text-gray-800 truncate">${repo.name}</h3>
+                        ${repo.isArchived ? '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Archived</span>' : ''}
+                    </div>
+                    
+                    <p class="text-gray-600 mb-4 h-12 line-clamp-2">${repo.description || 'No description provided'}</p>
+                    
+                    <div class="flex items-center text-sm text-gray-500 mb-4">
+                        <span class="flex items-center mr-4">
+                            <span class="language-dot" style="background-color: ${color}"></span>
+                            ${repo.language || 'Unknown'}
+                        </span>
+                        <span>Updated ${updated}</span>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-2">
+                        <a href="${repo.url}" target="_blank" rel="noopener noreferrer" 
+                           class="inline-flex items-center px-3 py-2 border border-gray-300 text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            <i class="fab fa-github mr-2"></i> Code
+                        </a>
+                        ${repo.website ? `
+                        <a href="${repo.website}" target="_blank" rel="noopener noreferrer"
+                           class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                            <i class="fas fa-external-link-alt mr-2"></i> Website
+                        </a>` : ''}
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // Set up filter buttons
+        function setupFilters() {
+            const filterContainer = document.getElementById('filter-buttons');
+            const languages = [...new Set(repos.map(repo => repo.language))].sort();
+            
+            languages.forEach(lang => {
+                const button = document.createElement('button');
+                button.className = 'filter-btn px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300';
+                button.textContent = lang;
+                button.dataset.filter = lang;
+                button.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    renderRepos(lang);
+                });
+                filterContainer.appendChild(button);
+            });
+
+            // Add event listener to 'All' button
+            const allButton = filterContainer.querySelector('[data-filter="all"]');
+            allButton.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                allButton.classList.add('active');
+                renderRepos('all');
+            });
+        }
+
+        // Format date to relative time
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - date) / 1000);
+            
+            const intervals = {
+                year: 31536000,
+                month: 2592000,
+                week: 604800,
+                day: 86400,
+                hour: 3600,
+                minute: 60
+            };
+            
+            for (const [unit, seconds] of Object.entries(intervals)) {
+                const interval = Math.floor(diffInSeconds / seconds);
+                if (interval >= 1) {
+                    return `${interval} ${unit}${interval === 1 ? '' : 's'} ago`;
+                }
+            }
+            
+            return 'just now';
+        }
+    </script>
+</body>
+</html>

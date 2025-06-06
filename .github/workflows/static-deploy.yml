@@ -83,7 +83,7 @@ jobs:
           npm run build
           
           # Create SPA 404 page
-          cat > dist/404.html << 'EOF'
+          cat > dist/404.html << 'EOL'
           <!DOCTYPE html>
           <html>
           <head>
@@ -94,7 +94,7 @@ jobs:
           </head>
           <body>Redirecting to <a href="/www/">home page</a>...</body>
           </html>
-          EOF
+          EOL
           
           # Verify build output
           ls -la dist/

@@ -17,7 +17,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: '18'
+  NODE_VERSION: '20'  # Latest LTS
   PYTHON_VERSION: '3.10'
   BASE_URL: '/www'  # GitHub Pages repository path
 
@@ -45,7 +45,7 @@ jobs:
           pip install -r repo-analyzer/requirements.txt
       
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
       
       - name: Build and run repository analysis
         env:
@@ -71,37 +71,38 @@ jobs:
             echo "Warning: repos_updated.json not found, using existing repos.json"
           fi
       
-      - name: Set up Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
       
-      - name: Install npm dependencies
-        run: npm ci
-      
-      - name: Build site
+      - name: Install and build
         run: |
           # Install dependencies
-          npm install
+          npm ci --no-audit
           
           # Build the production site
           npm run build
           
-          # Create a simple 404.html for GitHub Pages SPA support
+          # Create SPA 404 page
           echo '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Redirecting...</title>' > dist/404.html
           echo '<script>sessionStorage.redirect = location.href.replace(/\.html$/, "");</script>' >> dist/404.html
-          echo '<meta http-equiv="refresh" content="0;URL='\''/www/'\'"></head>' >> dist/404.html
+          echo '<meta http-equiv="refresh" content="0;URL='\''/www/'"></head>' >> dist/404.html
           echo '<body>Redirecting to <a href="/www/">home page</a>...</body></html>' >> dist/404.html
+          
+          # Verify build output
+          ls -la dist/
+          [ -f dist/index.html ] || { echo "Error: index.html not found in dist/" && exit 1; }
       
       - name: Setup Pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v4
       
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: 'dist'
       
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4

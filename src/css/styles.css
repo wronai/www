@@ -1,17 +1,18 @@
 /* Modern CSS Reset and Base Styles */
 :root {
   /* Light Theme */
-  --primary: #3730a3;  /* Even darker for maximum contrast */
-  --primary-hover: #312e81;
-  --primary-light: #e0e7ff;
+  --primary: #4f46e5;  /* More vibrant primary color */
+  --primary-hover: #4338ca;
+  --primary-light: #eef2ff;
   --bg-primary: #ffffff;
-  --bg-secondary: #e2e8f0;  /* Darker for better contrast */
-  --bg-tertiary: #cbd5e1;  /* Even darker for better contrast */
-  --border-light: #94a3b8;
-  --border-medium: #64748b;  /* Darker border for better visibility */
-  --text-primary: #020617;  /* Almost black for maximum contrast */
-  --text-secondary: #1e293b;  /* Darker for better contrast */
-  --text-muted: #1e293b;  /* Darker for better contrast */
+  --bg-secondary: #f8fafc;  /* Lighter background */
+  --bg-tertiary: #f1f5f9;  /* Slightly darker for contrast */
+  --border-light: #e2e8f0;
+  --border-medium: #cbd5e1;
+  --border-hover: #94a3b8;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
   --text-light: #f8fafc;
   
   /* Dark Theme */
@@ -104,18 +105,19 @@ p {
 
 /* Card Styles */
 .repo-card {
-  @apply relative rounded-lg overflow-hidden transition-all duration-200;
+  @apply relative rounded-xl overflow-hidden transition-all duration-300;
   background: var(--bg-primary);
-  border: 1px solid #e5e7eb; /* Light gray border by default */
-  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   min-width: 0;
   backdrop-filter: blur(8px);
-  transition: all 0.25s ease;
-  padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 1.75rem;
   position: relative;
   overflow: hidden;
+  height: 100%;
 }
 
 .repo-card::before {
@@ -327,17 +329,18 @@ p {
 
 /* Code blocks and copy buttons */
 .code-block {
-  @apply relative rounded-xs inline-flex items-center pr-5 py-0 cursor-pointer;
+  @apply relative rounded-lg inline-flex items-center pr-5 py-0 cursor-pointer transition-all duration-200;
   font-family: 'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-  font-size: 0.6875rem;
-  line-height: 1.2;
+  font-size: 0.8125rem;
+  line-height: 1.5;
   background: var(--bg-tertiary);
-  border: 1px solid var(--border-medium);
-  transition: all 0.15s ease;
-  margin: 0.05rem 0;
+  border: 1px solid var(--border-light);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  margin: 0.25rem 0;
   max-width: 100%;
   user-select: none;
   overflow: hidden;
+  min-height: 2.5rem;
 }
 
 .dark .code-block {
@@ -349,7 +352,13 @@ p {
 
 .code-block:hover {
   border-color: var(--primary);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.code-block:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .dark .code-block:hover {
@@ -396,18 +405,19 @@ p {
 }
 
 .code-block .copy-btn {
-  @apply absolute right-1 bottom-1 rounded-xs transition-colors flex items-center justify-center;
+  @apply absolute right-2 top-2 rounded-md transition-all flex items-center justify-center;
   background: var(--bg-primary);
   border: 1px solid var(--border-medium);
-  color: var(--text-secondary);
+  color: var(--text-muted);
   opacity: 0;
-  transition: all 0.15s ease;
-  width: 20px;
-  height: 20px;
-  font-size: 0.7rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 24px;
+  height: 24px;
+  font-size: 0.75rem;
   padding: 0;
   pointer-events: none;
   z-index: 2;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .dark .code-block .copy-btn {
@@ -444,11 +454,11 @@ p {
 }
 
 .code-block .copy-btn .tooltip {
-  @apply absolute bottom-full right-0 mb-1 px-2 py-1 text-xs rounded bg-gray-900 text-white whitespace-nowrap;
+  @apply absolute top-full right-0 mt-1 px-2 py-1 text-xs rounded bg-gray-900 text-white whitespace-nowrap;
   opacity: 0;
   pointer-events: none;
   transition: all 0.2s ease;
-  transform: translateY(-5px);
+  transform: translateY(5px);
 }
 
 .code-block:hover .copy-btn .tooltip,

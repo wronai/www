@@ -47,49 +47,53 @@ function showError(message) {
 
 // Fetch repository data
 async function loadRepos() {
-    try {
-        // Try loading from the current directory first (for GitHub Pages)
-        let response = await fetch(`${BASE_URL}/repos.json`);
-        
-        // If that fails, try the data directory with the BASE_URL
-        if (!response.ok) {
-            response = await fetch(`${BASE_URL}/data/repos_updated.json`);
+    // Try multiple possible locations for the repos.json file
+    const possiblePaths = [
+        // Production paths (GitHub Pages)
+        `${window.location.origin}${BASE_URL}/repos.json`,
+        `${window.location.origin}${BASE_URL}/data/repos_updated.json`,
+        // Fallback paths (for local development)
+        `${window.location.origin}/repos.json`,
+        `${window.location.origin}/data/repos_updated.json`,
+        // Relative paths (as last resort)
+        'repos.json',
+        'data/repos_updated.json'
+    ];
+
+    let lastError = null;
+    
+    for (const path of possiblePaths) {
+        try {
+            const response = await fetch(path);
+            if (response.ok) {
+                const data = await response.json();
+                console.log(`Successfully loaded data from: ${path}`);
+                
+                // Handle both direct array and { repositories: [...] } formats
+                if (Array.isArray(data)) {
+                    return data;
+                } else if (data && Array.isArray(data.repositories)) {
+                    return data.repositories;
+                } else if (data && data.repositories === undefined) {
+                    console.warn('Repository data exists but is empty or malformed');
+                    return [];
+                } else {
+                    throw new Error('Invalid data format in JSON');
+                }
+            }
+            lastError = `Failed to load from ${path}: ${response.status} ${response.statusText}`;
+        } catch (error) {
+            lastError = `Error loading from ${path}: ${error.message}`;
+            console.warn(lastError);
+            // Continue to next path
         }
-        
-        // If still failing, try without BASE_URL (for local development)
-        if (!response.ok) {
-            response = await fetch('/repos.json');
-        }
-        
-        // Last attempt: try the data directory without BASE_URL
-        if (!response.ok) {
-            response = await fetch('/data/repos_updated.json');
-        }
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        
-        // Handle both direct array and { repositories: [...] } formats
-        if (Array.isArray(data)) {
-            return data;
-        } else if (data && Array.isArray(data.repositories)) {
-            return data.repositories;
-        } else if (data && data.repositories === undefined) {
-            // Handle case where repos.json exists but is empty
-            console.warn('repos.json exists but is empty or malformed');
-            return [];
-        } else {
-            throw new Error('Invalid data format in JSON');
-        }
-    } catch (error) {
-        const errorMessage = `Error loading repository data: ${error.message}`;
-        showError(errorMessage);
-        console.error('Full error:', error);
-        return [];
     }
+    
+    // If we get here, all paths failed
+    const errorMessage = `All attempts to load repository data failed. ${lastError || ''}`;
+    console.error(errorMessage);
+    showError(errorMessage);
+    return [];
 }
 
 // Render all repositories
@@ -146,7 +150,7 @@ function createRepoCard(repo) {
                         <span>HTTP</span>
                     </div>
                 </div>
-                <div class="code-block group">
+                <div class="code-block group" data-command="${httpUrl}.git">
                     <div class="code-block-header">
                         <span>Clone via HTTPS</span>
                     </div>
@@ -166,7 +170,7 @@ function createRepoCard(repo) {
                         <span>SSH</span>
                     </div>
                 </div>
-                <div class="code-block group">
+                <div class="code-block group" data-command="git@github.com:${repo.url.split('github.com/')[1]}.git">
                     <div class="code-block-header">
                         <span>Clone with SSH</span>
                     </div>
@@ -186,7 +190,7 @@ function createRepoCard(repo) {
                         <span>Install with pip</span>
                     </div>
                 </div>
-                <div class="code-block group">
+                <div class="code-block group" data-command="${repo.installCommand}">
                     <div class="code-block-header">
                         <span>Run in your terminal</span>
                     </div>
@@ -330,8 +334,83 @@ function toggleDarkMode() {
     localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
 }
 
+// Function to copy text to clipboard
+async function copyToClipboard(text, button) {
+    try {
+        // Modern clipboard API (works in secure contexts)
+        if (navigator.clipboard) {
+            await navigator.clipboard.writeText(text);
+        } else {
+            // Fallback for insecure contexts
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand('copy');
+            } catch (err) {
+                console.error('Fallback copy failed:', err);
+                return false;
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+        
+        // Show copied state
+        const icon = button.querySelector('i');
+        const originalIcon = icon.className;
+        const tooltip = button.querySelector('.tooltip');
+        const originalTooltip = tooltip.textContent;
+        
+        // Update button state
+        button.classList.add('copied');
+        icon.className = 'fas fa-check';
+        tooltip.textContent = 'Copied!';
+        
+        // Reset button state after delay
+        setTimeout(() => {
+            button.classList.remove('copied');
+            icon.className = originalIcon;
+            tooltip.textContent = originalTooltip;
+        }, 2000);
+        
+        return true;
+    } catch (err) {
+        console.error('Failed to copy text: ', err);
+        const tooltip = button.querySelector('.tooltip');
+        tooltip.textContent = 'Copy failed!';
+        setTimeout(() => {
+            tooltip.textContent = 'Copy to clipboard';
+        }, 2000);
+        return false;
+    }
+}
+
 // Initialize the page
 document.addEventListener('DOMContentLoaded', async () => {
+    // Handle clicks on code blocks
+    document.addEventListener('click', (e) => {
+        // Find the closest code block or copy button
+        const codeBlock = e.target.closest('.code-block');
+        const copyButton = e.target.closest('.copy-btn');
+        
+        if (codeBlock) {
+            const command = codeBlock.getAttribute('data-command');
+            const button = codeBlock.querySelector('.copy-btn');
+            if (command && button) {
+                copyToClipboard(command, button);
+            }
+        } else if (copyButton) {
+            e.stopPropagation(); // Prevent event bubbling to the code block
+            const command = copyButton.getAttribute('data-command');
+            if (command) {
+                copyToClipboard(command, copyButton);
+            }
+        }
+    });
+    
     // Check for dark mode preference
     if (localStorage.getItem('darkMode') === 'true' || 
         (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {

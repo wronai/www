@@ -16,6 +16,11 @@ concurrency:
   group: "pages"
   cancel-in-progress: true
 
+env:
+  NODE_VERSION: '18'
+  PYTHON_VERSION: '3.10'
+  BASE_URL: '/www'  # GitHub Pages repository path
+
 jobs:
   build-and-deploy:
     environment:
@@ -26,11 +31,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for tags
       
-      - name: Set up Python
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: ${{ env.PYTHON_VERSION }}
       
       - name: Install Python dependencies
         run: |
@@ -40,30 +47,34 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       
-      - name: Build Docker image
-        run: docker build -t repo-analyzer ./repo-analyzer
-      
-      - name: Run repository analysis
+      - name: Build and run repository analysis
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Create data directory if it doesn't exist
+          # Build the analyzer image
+          docker build -t repo-analyzer ./repo-analyzer
+          
+          # Create data directory
           mkdir -p data
           
           # Run analysis
           docker run --rm \
             -e "GITHUB_TOKEN=$GITHUB_TOKEN" \
+            -e "GITHUB_ORG=wronai" \
             -v "$(pwd)/data:/data" \
-            -v "$(pwd)/repo-analyzer:/app" \
-            repo-analyzer python analyze_repo.py
+            repo-analyzer python /app/analyze_repo.py
           
           # Update repos.json with analyzed data
-          cp data/repos_updated.json repos.json || true
+          if [ -f "data/repos_updated.json" ]; then
+            cp data/repos_updated.json repos.json
+          else
+            echo "Warning: repos_updated.json not found, using existing repos.json"
+          fi
       
-      - name: Set up Node.js
+      - name: Set up Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
       
       - name: Install npm dependencies
@@ -71,16 +82,17 @@ jobs:
       
       - name: Build site
         run: |
-          # Create dist directory
-          mkdir -p dist
+          # Install dependencies
+          npm install
           
-          # Copy all files to dist directory
-          cp -r * dist/ 2>/dev/null || true
+          # Build the production site
+          npm run build
           
-          # Remove files that shouldn't be deployed
-          rm -rf dist/.github dist/.gitignore dist/README.md dist/LICENSE
-          rm -rf dist/repo-analyzer dist/analyze_repos.sh dist/setup_github_token.sh
-          rm -f dist/.env.example
+          # Create a simple 404.html for GitHub Pages SPA support
+          echo '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Redirecting...</title>' > dist/404.html
+          echo '<script>sessionStorage.redirect = location.href.replace(/\.html$/, "");</script>' >> dist/404.html
+          echo '<meta http-equiv="refresh" content="0;URL='\''/www/'\'"></head>' >> dist/404.html
+          echo '<body>Redirecting to <a href="/www/">home page</a>...</body></html>' >> dist/404.html
       
       - name: Setup Pages
         uses: actions/configure-pages@v3

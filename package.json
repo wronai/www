@@ -1,0 +1,41 @@
+{
+  "name": "wronai-projects-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A dashboard to showcase and manage WronAI's open source projects with automatic repository analysis.",
+  "homepage": "/www",
+  "scripts": {
+    "start": "serve -s dist -p 3000",
+    "dev": "serve -s src -p 3000",
+    "build": "node scripts/build.js",
+    "analyze": "make analyze",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,html,css}\"",
+    "prepare": "husky install"
+  },
+  "keywords": [
+    "wronai",
+    "dashboard",
+    "projects",
+    "open-source",
+    "github"
+  ],
+  "author": "WronAI Team",
+  "license": "Apache",
+  "dependencies": {
+    "serve": "^14.2.0"
+  },
+  "devDependencies": {
+    "fs-extra": "^11.1.1",
+    "husky": "^8.0.3",
+    "prettier": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}

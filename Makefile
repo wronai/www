@@ -1,4 +1,4 @@
-.PHONY: install dev build analyze deploy clean setup-token
+.PHONY: install dev build analyze deploy clean setup-token token-page
 
 # Configuration
 GITHUB_ORG ?= wronai
@@ -6,9 +6,17 @@ GITHUB_TOKEN ?= $(shell [ -f .env ] && grep -E '^GITHUB_TOKEN=' .env | cut -d '=
 NODE_ENV ?= development
 PORT ?= 3000
 
+# Directories
+SRC_DIR = src
+DIST_DIR = dist
+SCRIPTS_DIR = scripts
+ANALYZER_DIR = repo-analyzer
+DATA_DIR = data
+
 # Colors
 GREEN  := $(shell tput -Txterm setaf 2)
 YELLOW := $(shell tput -Txterm setaf 3)
+BLUE   := $(shell tput -Txterm setaf 4)
 WHITE  := $(shell tput -Txterm setaf 7)
 RESET  := $(shell tput -Txterm sgr0)
 
@@ -34,17 +42,24 @@ install: check-env
 
 ## Start development server
 dev:
-	@echo "${YELLOW}Starting development server...${RESET}"
-	@npx serve -l $(PORT)
+	@echo "${YELLOW}Starting development server on port ${PORT}...${RESET}"
+	@echo "${BLUE}Open http://localhost:${PORT} in your browser${RESET}"
+	@npm run dev
 
 ## Build for production
-build:
+build: check-env
 	@echo "${YELLOW}Building for production...${RESET}"
-	@echo "${GREEN}✓ Build complete${RESET}"
+	@rm -rf ${DIST_DIR}
+	@npm run build
+	@echo "${GREEN}✓ Production build complete in ${DIST_DIR}${RESET}"
 
 ## Setup GitHub token
 setup-token:
 	@./setup_github_token.sh
+
+## Open GitHub token page with required scopes
+token-page:
+	@./scripts/open-token-page.sh
 
 ## Check environment
 check-env:
@@ -61,24 +76,30 @@ analyze: check-env
 		exit 0; \
 	fi
 	@echo "${YELLOW}Analyzing repositories...${RESET}"
-	@if [ ! -f "analyze_repos.sh" ]; then \
-		echo "${YELLOW}analyze_repos.sh not found. Please run from project root.${RESET}"; \
+	@mkdir -p ${DATA_DIR}
+	@if [ ! -f "${ANALYZER_DIR}/analyze_repo.py" ]; then \
+		echo "${YELLOW}Repository analyzer not found.${RESET}"; \
 		exit 1; \
 	fi
-	@chmod +x analyze_repos.sh
-	@./analyze_repos.sh
+	@docker build -t repo-analyzer ${ANALYZER_DIR}
+	@docker run --rm \
+		-e "GITHUB_TOKEN=${GITHUB_TOKEN}" \
+		-e "GITHUB_ORG=${GITHUB_ORG}" \
+		-v "$(PWD)/${DATA_DIR}:/data" \
+		repo-analyzer python /app/analyze_repo.py
 	@echo "${GREEN}✓ Repository analysis complete${RESET}"
 
 ## Deploy to production
 deploy: build
 	@echo "${YELLOW}Deploying to production...${RESET}"
-	@echo "${GREEN}✓ Deployed successfully${RESET}"
+	@echo "${GREEN}✓ Deployment complete. Run 'git push' to deploy to GitHub Pages.${RESET}"
 
 ## Clean build artifacts
 clean:
 	@echo "${YELLOW}Cleaning up...${RESET}"
+	@rm -rf ${DIST_DIR}
 	@rm -rf node_modules
-	@rm -f repos_updated.json
+	@rm -f ${DATA_DIR}/repos_updated.json
 	@echo "${GREEN}✓ Clean complete${RESET}"
 
 .DEFAULT_GOAL := help

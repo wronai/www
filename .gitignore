@@ -1,66 +1,7 @@
 # Dependencies
 node_modules/
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Build files
-.next/
-.nuxt/
-.cache/
-.vuepress/dist/
-.serverless/
-
-# Debug logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Local development
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Repository analysis
-data/
-repos_updated.json
-repo_analysis/
-*.bak_*
-
-# Editor directories and files
-.idea
-.vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+package-lock.json
+yarn.lock
 
 # Python
 __pycache__/
@@ -68,76 +9,60 @@ __pycache__/
 *$py.class
 *.so
 .Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
 
-# Node
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Next.js
+# Build and Distribution
+build/
+dist/
 .next/
-out/
+.nuxt/
+.cache/
+.vuepress/dist/
+.serverless/
+.out/
 
-# Production
-build
+# Environment and Configuration
+.env
+.env.*
+!.env.example
 
-# Misc
-.DS_Store
-*.pem
-
-# Debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Local env files
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Vercel
-.vercel
-
-# Analysis artifacts
+# Repository Analysis
+data/
+repo_analysis/
 repos_updated.json
 *.bak_*
-repo_analysis/
 
-# IDE
+# Editor and IDE
 .idea/
 .vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
 *.swp
 *.swo
 *~
 
-# Logs
-logs
+# Logs and Debug
+logs/
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Temp files
+# System and Temporary Files
+.DS_Store
+Thumbs.db
 *.tmp
 *.bak
 *.swp
 *~
 *.swo
 
-# System Files
-.DS_Store
-Thumbs.db
+# Production
+build/
+
+# Vercel
+.vercel/

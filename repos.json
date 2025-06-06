@@ -2,10 +2,10 @@
   "repositories": [
     {
       "name": "airun",
-      "description": "",
+      "description": "AIRun is a powerful command-line tool that can execute scripts in multiple languages (Python, Shell, Node.js, PHP) with intelligent AI-powered error detection and automatic fixing capabilities.",
       "url": "https://github.com/wronai/airun",
       "website": "https://wronai.github.io/airun/",
-      "updatedAt": "2025-06-04T20:45:34Z",
+      "updatedAt": "2025-06-06T12:49:37Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",
@@ -200,13 +200,13 @@
       "description": "edge computing LLM for embedded devices such RPI",
       "url": "https://github.com/wronai/www",
       "website": "https://wronai.github.io/www/",
-      "updatedAt": "2025-06-06T11:37:18Z",
+      "updatedAt": "2025-06-06T15:47:35Z",
       "isArchived": false,
       "isFork": false,
-      "language": "JavaScript",
+      "language": "Python",
       "pypi": "",
       "cloneCommand": "git clone https://github.com/wronai/www.git",
-      "installCommand": ""
+      "installCommand": "pip install www"
     }
   ]
 }

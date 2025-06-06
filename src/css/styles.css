@@ -246,6 +246,7 @@ p {
   position: relative;
   overflow: hidden;
   box-shadow: var(--shadow-sm);
+  padding: 0.25rem 0.5rem;
 }
 
 .dark .filter-btn {

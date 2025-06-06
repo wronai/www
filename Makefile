@@ -22,11 +22,15 @@ help:
 	@echo '  ${YELLOW}make${RESET} ${GREEN}<target>${RESET}'
 	@echo ''
 	@echo 'Targets:'
-	@echo '  ${GREEN}install${RESET}    Install dependencies'
-	@echo '  ${GREEN}dev${RESET}        Start development server'
-	@echo '  ${GREEN}build${RESET}      Build for production'
-	@echo '  ${GREEN}preview${RESET}    Preview production build locally'
-	@echo '  ${GREEN}clean${RESET}      Clean build artifacts'
+	@echo '  ${GREEN}install${RESET}          Install dependencies'
+	@echo '  ${GREEN}dev${RESET}              Start development server'
+	@echo '  ${GREEN}build${RESET}            Build for production'
+	@echo '  ${GREEN}preview${RESET}          Preview production build locally'
+	@echo '  ${GREEN}clean${RESET}            Clean build artifacts'
+	@echo '  ${GREEN}update-repos${RESET}     Update repository data'
+	@echo '  ${GREEN}setup-dev${RESET}        Set up development environment'
+	@echo '  ${GREEN}test-gh-actions${RESET}   Test GitHub Actions locally'
+	@echo '  ${GREEN}setup-test-env${RESET}    Set up test environment'
 
 ## Install dependencies
 install:
@@ -58,6 +62,21 @@ clean:
 	@echo "${YELLOW}Cleaning build artifacts...${RESET}"
 	@rm -rf ${DIST_DIR} .act
 	@echo "${GREEN}✓ Clean complete${RESET}"
+
+## Update repository data
+update-repos:
+	@echo "${YELLOW}Updating repository data...${RESET}"
+	@if [ ! -f "update_repos.py" ]; then \
+		echo "${RED}Error: update_repos.py not found in the root directory${RESET}"; \
+		exit 1; \
+	fi
+	@if command -v python3 &> /dev/null; then \
+		python3 update_repos.py; \
+	else \
+		echo "${YELLOW}Python 3 is required to update repository data${RESET}"; \
+		exit 1; \
+	fi
+	@echo "${GREEN}✓ Repository data updated${RESET}"
 
 ## Set up development environment
 setup-dev:

@@ -14,18 +14,15 @@ on:
 
 # Set the permission to allow repository analysis
 permissions:
-  contents: write  # Needed for pushing changes
+  contents: read
   actions: read
   packages: read
-
-env:
-  PYTHON_VERSION: '3.10'
 
 jobs:
   analyze:
     name: Analyze Repositories
     runs-on: ubuntu-latest
-    
+
     # Skip if commit message contains [skip ci] or [ci skip]
     if: "!contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.head_commit.message, '[ci skip]')"
 
@@ -53,28 +50,18 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ORG: wronai
         run: |
-          set -e  # Exit on error
+          # Build the analyzer image
+          docker build -t repo-analyzer ./repo-analyzer
           
           # Create data directory
           mkdir -p data
           
-          # Build the analyzer image
-          echo "Building repository analyzer..."
-          if ! docker build -t repo-analyzer ./repo-analyzer; then
-            echo "::error::Failed to build repo-analyzer"
-            exit 1
-          fi
-          
           # Run analysis
-          echo "Running repository analysis..."
-          if ! docker run --rm \
+          docker run --rm \
             -e "GITHUB_TOKEN=$GITHUB_TOKEN" \
             -e "GITHUB_ORG=$GITHUB_ORG" \
             -v "$(pwd)/data:/data" \
-            repo-analyzer python /app/analyze_repo.py; then
-            echo "::error::Repository analysis failed"
-            exit 1
-          fi
+            repo-analyzer python /app/analyze_repo.py
           
           # Check if analysis produced new data
           if [ -f "data/repos_updated.json" ]; then
@@ -96,7 +83,7 @@ jobs:
             
             # Check if there are changes to commit
             if ! git diff --cached --quiet; then
-              git commit -m "chore: update repository data [skip ci] [ci skip]"
+              git commit -m "chore: update repository data [skip ci]"
               git push
               echo "Repository data updated and committed"
             else

@@ -11,9 +11,9 @@ permissions:
   pages: write
   id-token: write
 
-# Allow one concurrent deployment
+# Allow only one deployment at a time for this repository
 concurrency:
-  group: "pages"
+  group: "deploy-${{ github.ref }}"
   cancel-in-progress: true
 
 env:

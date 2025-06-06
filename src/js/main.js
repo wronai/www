@@ -127,7 +127,7 @@ function createRepoCard(repo) {
     card.innerHTML = `
         <div class="p-6">
             <div class="flex justify-between items-start mb-3">
-                <h3 class="text-xl font-bold text-gray-800 dark:text-white truncate">${repo.name}</h3>
+                <h3 class="text-xl font-bold text-gray-200 dark:text-white truncate">${repo.name}</h3>
                 ${repo.isArchived ? '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-100">Archived</span>' : ''}
             </div>
             

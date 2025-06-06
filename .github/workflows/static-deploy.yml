@@ -18,7 +18,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: '18'
+  NODE_VERSION: '20'  # Updated to latest LTS
   BASE_URL: '/www'
 
 jobs:
@@ -46,9 +46,10 @@ jobs:
           if [ ! -f package-lock.json ]; then
             npm install --package-lock-only
           fi
-          npm ci
+          npm ci --no-audit
           
       - name: Create repos.json if missing
+        continue-on-error: true
         run: |
           if [ ! -f "repos.json" ]; then
             echo '{"repositories": []}' > repos.json
@@ -64,7 +65,9 @@ jobs:
           echo '<meta http-equiv="refresh" content="0;URL='\''/www/'"></head>' >> dist/404.html
           echo '<body>Redirecting to <a href="/www/">home page</a>...</body></html>' >> dist/404.html
           
+          # Verify build output
           ls -la dist/
+          [ -f dist/index.html ] || { echo "Error: index.html not found in dist/" && exit 1; }
       
       - name: Setup Pages
         uses: actions/configure-pages@v4

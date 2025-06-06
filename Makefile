@@ -53,6 +53,15 @@ build: check-env
 	@npm run build
 	@echo "${GREEN}✓ Production build complete in ${DIST_DIR}${RESET}"
 
+## Build for GitHub Pages
+build-gh-pages: check-env
+	@echo "${YELLOW}Building for GitHub Pages...${RESET}"
+	@rm -rf ${DIST_DIR}
+	@echo "${BLUE}Setting base URL for GitHub Pages...${RESET}"
+	@echo 'window.BASE_URL = "/www";' > ${SRC_DIR}/config.js
+	@npm run build
+	@echo "${GREEN}✓ GitHub Pages build complete in ${DIST_DIR}${RESET}"
+
 ## Setup GitHub token
 setup-token:
 	@./setup_github_token.sh
@@ -89,10 +98,19 @@ analyze: check-env
 		repo-analyzer python /app/analyze_repo.py
 	@echo "${GREEN}✓ Repository analysis complete${RESET}"
 
-## Deploy to production
-deploy: build
-	@echo "${YELLOW}Deploying to production...${RESET}"
-	@echo "${GREEN}✓ Deployment complete. Run 'git push' to deploy to GitHub Pages.${RESET}"
+## Deploy to GitHub Pages
+deploy: build-gh-pages
+	@echo "${YELLOW}Deploying to GitHub Pages...${RESET}"
+	@if [ -d ".git" ]; then \
+		echo "${BLUE}Committing changes...${RESET}"; \
+		git add -A; \
+		git commit -m "Deploy to GitHub Pages" || true; \
+		echo "${BLUE}Pushing to GitHub...${RESET}"; \
+		git push origin main; \
+		echo "${GREEN}✓ Deployment complete!${RESET} Visit https://wronai.github.io/www"; \
+	else \
+		echo "${YELLOW}Not a git repository. Please commit and push changes manually.${RESET}"; \
+	fi
 
 ## Clean build artifacts
 clean:

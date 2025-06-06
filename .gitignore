@@ -2,7 +2,7 @@
 node_modules/
 # package-lock.json  # Tracked for reliable dependency installation
 yarn.lock
-
+package-lock.json
 # Python
 __pycache__/
 *.py[cod]

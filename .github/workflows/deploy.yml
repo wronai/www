@@ -149,8 +149,9 @@ jobs:
             exit 1
           fi
           
-          # Create SPA 404 page
-          cat > dist/404.html << 'EOL'
+          # Create SPA 404 page with proper escaping
+          mkdir -p dist
+          cat > dist/404.html << 'EOF'
           <!DOCTYPE html>
           <html>
           <head>
@@ -161,7 +162,7 @@ jobs:
           </head>
           <body>Redirecting to <a href="/www/">home page</a>...</body>
           </html>
-          EOL
+          EOF
           
           # Ensure index.html exists
           if [ ! -f "dist/index.html" ]; then
@@ -187,11 +188,18 @@ jobs:
           ls -la dist/
           
           # Verify critical files exist
+          critical_error=0
           for file in index.html main.js styles.css; do
             if [ ! -f "dist/$file" ]; then
-              echo "::warning::$file not found in dist/"
+              echo "::error::$file not found in dist/"
+              critical_error=1
             fi
           done
+          
+          if [ $critical_error -eq 1 ]; then
+            echo "::error::Critical files missing from dist/ directory"
+            exit 1
+          fi
       
       - name: Setup Pages
         uses: actions/configure-pages@v4

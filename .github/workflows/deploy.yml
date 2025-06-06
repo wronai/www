@@ -109,19 +109,18 @@ jobs:
           echo "Running build..."
           npm run build || { echo "Error: Build failed" && exit 1; }
           
-          # Create SPA 404 page using a here-doc to avoid quote issues
-          cat > dist/404.html << 'EOF'
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <meta charset="utf-8">
-            <title>Redirecting...</title>
-            <script>sessionStorage.redirect = location.href.replace(/\.html$/, "");</script>
-            <meta http-equiv="refresh" content="0;URL=/www/">
-          </head>
-          <body>Redirecting to <a href="/www/">home page</a>...</body>
-          </html>
-          EOF
+          # Create SPA 404 page using echo commands
+          mkdir -p dist
+          echo '<!DOCTYPE html>' > dist/404.html
+          echo '<html>' >> dist/404.html
+          echo '<head>' >> dist/404.html
+          echo '  <meta charset="utf-8">' >> dist/404.html
+          echo '  <title>Redirecting...</title>' >> dist/404.html
+          echo '  <script>sessionStorage.redirect = location.href.replace(/\.html$/, "");</script>' >> dist/404.html
+          echo '  <meta http-equiv="refresh" content="0;URL=/www/">' >> dist/404.html
+          echo '</head>' >> dist/404.html
+          echo '<body>Redirecting to <a href="/www/">home page</a>...</body>' >> dist/404.html
+          echo '</html>' >> dist/404.html
           
           # Verify build output
           ls -la dist/

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Loading Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>JSON Loading Test</h1>
+    
+    <div id="test1">
+        <h2>Test 1: Load from root (/repos.json)</h2>
+        <pre id="test1-result">Testing...</pre>
+    </div>
+    
+    <div id="test2">
+        <h2>Test 2: Load from data directory (/data/repos_updated.json)</h2>
+        <pre id="test2-result">Testing...</pre>
+    </div>
+    
+    <div id="test3">
+        <h2>Test 3: Load with fetch API</h2>
+        <pre id="test3-result">Testing...</pre>
+    </div>
+    
+    <div id="test4">
+        <h2>Test 4: Load with XMLHttpRequest</h2>
+        <pre id="test4-result">Testing...</pre>
+    </div>
+
+    <script>
+        // Test 1: Load from root
+        fetch('/repos.json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('test1-result').innerHTML = 
+                    `<span class="success">✓ Successfully loaded</span>\n` +
+                    `Type: ${typeof data}\n` +
+                    `Keys: ${Object.keys(data).join(', ')}\n` +
+                    `Sample: ${JSON.stringify(Object.values(data)[0], null, 2).substring(0, 200)}`;
+            })
+            .catch(error => {
+                document.getElementById('test1-result').innerHTML = 
+                    `<span class="error">✗ Error: ${error.message}</span>`;
+            });
+
+        // Test 2: Load from data directory
+        fetch('/data/repos_updated.json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('test2-result').innerHTML = 
+                    `<span class="success">✓ Successfully loaded</span>\n` +
+                    `Type: ${typeof data}\n` +
+                    `Keys: ${Object.keys(data).join(', ')}\n` +
+                    `Sample: ${JSON.stringify(Object.values(data)[0], null, 2).substring(0, 200)}`;
+            })
+            .catch(error => {
+                document.getElementById('test2-result').innerHTML = 
+                    `<span class="error">✗ Error: ${error.message}</span>`;
+            });
+
+        // Test 3: Test with fetch API and credentials
+        fetch('/repos.json', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById('test3-result').innerHTML = 
+                `<span class="success">✓ Successfully loaded with fetch API</span>\n` +
+                `Status: ${response.status} ${response.statusText}\n` +
+                `Content-Type: ${response.headers.get('Content-Type')}`;
+        })
+        .catch(error => {
+            document.getElementById('test3-result').innerHTML = 
+                `<span class="error">✗ Fetch API Error: ${error.message}</span>`;
+        });
+
+        // Test 4: Test with XMLHttpRequest
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', '/repos.json', true);
+        xhr.onload = function() {
+            if (xhr.status >= 200 && xhr.status < 400) {
+                try {
+                    const data = JSON.parse(xhr.responseText);
+                    document.getElementById('test4-result').innerHTML = 
+                        `<span class="success">✓ Successfully loaded with XMLHttpRequest</span>\n` +
+                        `Status: ${xhr.status} ${xhr.statusText}\n` +
+                        `Content-Type: ${xhr.getResponseHeader('Content-Type')}`;
+                } catch (e) {
+                    document.getElementById('test4-result').innerHTML = 
+                        `<span class="error">✗ JSON Parse Error: ${e.message}</span>\n` +
+                        `Response: ${xhr.responseText.substring(0, 200)}...`;
+                }
+            } else {
+                document.getElementById('test4-result').innerHTML = 
+                    `<span class="error">✗ XHR Error: ${xhr.status} ${xhr.statusText}</span>\n` +
+                    `Response: ${xhr.responseText.substring(0, 200)}...`;
+            }
+        };
+        xhr.onerror = function() {
+            document.getElementById('test4-result').innerHTML = 
+                '<span class="error">✗ Network Error: Failed to make the request</span>';
+        };
+        xhr.send();
+    </script>
+</body>
+</html>

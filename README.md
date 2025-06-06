@@ -1,24 +1,25 @@
 # WronAI Projects Dashboard
 
-A dashboard to showcase and manage WronAI's open source projects with automatic repository analysis.
+A static dashboard to showcase WronAI's open source projects with automatic repository analysis.
 
 ## Features
 
-- Automatic repository analysis (Python, Node.js, Go)
+- Automatic repository analysis (via GitHub Actions)
 - Package manager detection (pip, npm, yarn, poetry)
 - PyPI package verification
 - Docker support detection
 - GitHub Actions workflow detection
-- Easy GitHub token setup
 - Responsive design with dark mode support
+- Deployed as a static site on GitHub Pages
 
-## Prerequisites
+## Local Development
 
-- Docker and Docker Compose
-- Python 3.8+
-- GitHub Personal Access Token with required scopes
+### Prerequisites
 
-## Getting Started
+- Node.js 18+
+- npm or yarn
+
+### Getting Started
 
 1. **Clone the repository**:
    ```bash
@@ -26,29 +27,12 @@ A dashboard to showcase and manage WronAI's open source projects with automatic 
    cd www
    ```
 
-2. **Set up your environment**:
+2. **Install dependencies**:
    ```bash
-   # Copy the example .env file
-   cp .env.example .env
-   
-   # Generate a GitHub token with required permissions
-   make token-page
+   npm install
    ```
 
-3. **Add your GitHub token**:
-   - Open the generated token page in your browser
-   - Click "Generate token"
-   - Copy the token and add it to your `.env` file:
-     ```
-     GITHUB_TOKEN=your_token_here
-     ```
-
-4. **Install dependencies**:
-   ```bash
-   make install
-   ```
-
-5. **Run the development server**:
+3. **Run the development server**:
    ```bash
    make dev
    ```

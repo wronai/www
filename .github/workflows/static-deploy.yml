@@ -80,10 +80,14 @@ jobs:
           
       - name: Build site
         run: |
+          # Ensure dist directory exists
+          mkdir -p dist
+          
+          # Build the site
           npm run build
           
-          # Create SPA 404 page
-          cat > dist/404.html << 'EOL'
+          # Create SPA 404 page with proper escaping
+          cat > dist/404.html << 'EOF'
           <!DOCTYPE html>
           <html>
           <head>
@@ -94,11 +98,17 @@ jobs:
           </head>
           <body>Redirecting to <a href="/www/">home page</a>...</body>
           </html>
-          EOL
+          EOF
           
           # Verify build output
+          echo "Build output:"
           ls -la dist/
-          [ -f dist/index.html ] || { echo "Error: index.html not found in dist/" && exit 1; }
+          
+          # Check for required files
+          if [ ! -f "dist/index.html" ]; then
+            echo "::error::index.html not found in dist/ directory"
+            exit 1
+          fi
       
       - name: Setup Pages
         uses: actions/configure-pages@v4

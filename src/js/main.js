@@ -131,7 +131,7 @@ function createRepoCard(repo) {
                 ${repo.isArchived ? '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-100">Archived</span>' : ''}
             </div>
             
-            <p class="text-gray-600 dark:text-gray-300 mb-4 h-12 line-clamp-2">${repo.description || 'No description provided'}</p>
+            <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">${repo.description || 'No description provided'}</p>
             
             <div class="flex flex-wrap items-center text-sm text-gray-500 dark:text-gray-400 mb-4 gap-2">
                 <span class="flex items-center">

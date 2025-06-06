@@ -3,7 +3,15 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
+      - '.gitignore'
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Analyze Repositories"]
+    types: [completed]
+    branches: [main]
 
 # Set the permission to allow deployment to GitHub Pages
 permissions:
@@ -11,45 +19,43 @@ permissions:
   pages: write
   id-token: write
 
-# Allow only one deployment at a time for this repository
+# Allow only one deployment at a time for this branch
 concurrency:
   group: "deploy-${{ github.ref }}"
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: '20'  # Latest LTS
-  PYTHON_VERSION: '3.10'
-  BASE_URL: '/www'  # GitHub Pages repository path
+  NODE_VERSION: '20'
+  BASE_URL: '/www'
 
 jobs:
   build-and-deploy:
+    # Skip if commit message contains [skip ci] or if the workflow run failed
+    if: >
+      !contains(github.event.head_commit.message, '[skip ci]') && 
+      !contains(github.event.head_commit.message, '[ci skip]') &&
+      (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Fetch all history for tags
-      
-      - name: Set up Python ${{ env.PYTHON_VERSION }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-      
-      - name: Install Python dependencies
+          fetch-depth: 0
+
+      - name: Install jq for JSON processing
         run: |
-          python -m pip install --upgrade pip
-          pip install -r repo-analyzer/requirements.txt
-      
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      
+          sudo apt-get update
+          sudo apt-get install -y jq
+
       - name: Setup repository data
-        id: setup-repo-data
         run: |
+          set -e  # Exit on error
+          
           # Create necessary directories
           mkdir -p data dist
           
@@ -59,88 +65,33 @@ jobs:
             echo "Created/Reset repos.json"
           fi
           
-          # Ensure repos.json is copied to data directory for the analyzer
-          cp repos.json data/repos.json || true
-          
-          # Verify files exist
-          echo "Repository data status:"
-          ls -la repos.json data/repos.json 2>/dev/null || true
-          
-          # Set output for next steps
-          echo "repo_data_setup=done" >> $GITHUB_OUTPUT
-      
-      - name: Build and run repository analysis
-        if: steps.setup-repo-data.outputs.repo_data_setup == 'done'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -e  # Exit on error
-          
-          # Build the analyzer image
-          echo "Building repository analyzer..."
-          if ! docker build -t repo-analyzer ./repo-analyzer; then
-            echo "Warning: Failed to build repo-analyzer, continuing with existing data"
-            exit 0
-          fi
-          
-          # Only run analysis if we have a token
-          if [ -n "$GITHUB_TOKEN" ]; then
-            echo "Running repository analysis..."
-            if ! docker run --rm \
-              -e "GITHUB_TOKEN=$GITHUB_TOKEN" \
-              -e "GITHUB_ORG=wronai" \
-              -v "$(pwd)/data:/data" \
-              repo-analyzer python /app/analyze_repo.py; then
-              echo "Warning: Repository analysis failed, continuing with existing data"
-            else
-              # Update repos.json with analyzed data if available
-              if [ -f "data/repos_updated.json" ]; then
-                cp data/repos_updated.json repos.json
-                echo "Updated repos.json with fresh data"
-              fi
-            fi
-          else
-            echo "No GITHUB_TOKEN provided, using existing repos.json"
-          fi
-          
-          # Final validation of repos.json
+          # Validate JSON
           if ! jq empty repos.json 2>/dev/null; then
-            echo "Error: repos.json is not valid JSON, resetting to empty"
-            echo '{"repositories": []}' > repos.json
+            echo "::error::repos.json is not valid JSON"
+            exit 1
           fi
           
           # Copy to dist directory for the build
-          mkdir -p dist/data
           cp repos.json dist/repos.json
-          cp repos.json dist/data/repos_updated.json
-      
+          
+          echo "Repository data ready"
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-      
-      - name: Install and build
+
+      - name: Install dependencies and build
         run: |
-          # Debug environment
-          echo "Node version: $(node --version)"
-          echo "NPM version: $(npm --version)"
-          
-          # Validate package.json
-          if [ ! -f "package.json" ]; then
-            echo "::error::package.json not found"
-            exit 1
-          fi
+          set -e  # Exit on error
           
           # Install dependencies
           echo "Installing dependencies..."
           if ! npm ci --no-audit; then
-            echo "::error::npm ci failed"
+            echo "::error::Failed to install dependencies"
             exit 1
           fi
-          
-          # Verify build directory exists
-          mkdir -p dist
           
           # Build the production site
           echo "Building production site..."
@@ -149,66 +100,36 @@ jobs:
             exit 1
           fi
           
-          # Create SPA 404 page with proper escaping
-          mkdir -p dist
+          # Create SPA 404 page
           cat > dist/404.html << 'EOF'
           <!DOCTYPE html>
           <html>
           <head>
             <meta charset="utf-8">
             <title>Redirecting...</title>
-            <script>sessionStorage.redirect = location.href.replace(/\.html$/, "");</script>
+            <script>sessionStorage.redirect = location.href;</script>
             <meta http-equiv="refresh" content="0;URL=/www/">
           </head>
           <body>Redirecting to <a href="/www/">home page</a>...</body>
           </html>
           EOF
           
-          # Ensure index.html exists
+          # Verify build
           if [ ! -f "dist/index.html" ]; then
-            echo "::warning::index.html not found in dist/, creating a basic one"
-            cat > dist/index.html << 'EOL'
-            <!DOCTYPE html>
-            <html>
-            <head>
-              <meta charset="utf-8">
-              <title>WronAI Projects</title>
-              <meta name="viewport" content="width=device-width, initial-scale=1">
-              <meta http-equiv="refresh" content="0;URL='/www/'">
-            </head>
-            <body>
-              <p>Redirecting to <a href="/www/">WronAI Projects</a>...</p>
-            </body>
-            </html>
-            EOL
-          fi
-          
-          # Debug: Show dist contents
-          echo "Build output in dist/:"
-          ls -la dist/
-          
-          # Verify critical files exist
-          critical_error=0
-          for file in index.html main.js styles.css; do
-            if [ ! -f "dist/$file" ]; then
-              echo "::error::$file not found in dist/"
-              critical_error=1
-            fi
-          done
-          
-          if [ $critical_error -eq 1 ]; then
-            echo "::error::Critical files missing from dist/ directory"
+            echo "::error::Build failed - index.html not found"
             exit 1
           fi
-      
+          
+          echo "Build completed successfully"
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
-      
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: 'dist'
-      
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

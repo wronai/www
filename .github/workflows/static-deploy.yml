@@ -13,7 +13,7 @@ permissions:
   pages: write
   id-token: write
 
-# Allow only one deployment at a time for this repository
+# Allow only one deployment at a time for this branch
 concurrency:
   group: "static-deploy-${{ github.ref }}"
   cancel-in-progress: true
@@ -43,14 +43,33 @@ jobs:
       
       - name: Install dependencies
         run: |
+          set -e  # Exit on error
+          
+          echo "Setting up Node.js environment..."
+          
           # Generate package-lock.json if it doesn't exist
-          if [ ! -f package-lock.json ]; then
+          if [ ! -f "package-lock.json" ]; then
+            echo "Generating package-lock.json..."
             npm install --package-lock-only
           fi
-          npm ci --no-audit
           
+          echo "Installing dependencies..."
+          if ! npm ci --no-audit; then
+            echo "::error::Failed to install dependencies"
+            exit 1
+          fi
+          
+      - name: Install jq for JSON processing
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+
       - name: Setup repository data
         run: |
+          set -e  # Exit on error
+          
+          echo "Setting up repository data..."
+          
           # Create data directory if it doesn't exist
           mkdir -p data
           
@@ -67,7 +86,7 @@ jobs:
           
           # Verify JSON is valid
           if ! jq empty repos.json 2>/dev/null; then
-            echo "Error: repos.json is not valid JSON"
+            echo "::error::repos.json is not valid JSON"
             echo '{"repositories": []}' > repos.json
             echo "Reset to empty repos.json"
           fi
@@ -75,17 +94,34 @@ jobs:
           # Create a backup of the original repos.json
           cp repos.json repos.json.bak
           
-          # List the contents for debugging
-          echo "Repository data contents:"
-          ls -la repos.json* data/ || true
+          # Verify the backup was created
+          if [ ! -f "repos.json.bak" ]; then
+            echo "::error::Failed to create repos.json backup"
+            exit 1
+          fi
+          
+          echo "Repository data ready"
           
       - name: Build site
         run: |
+          set -e  # Exit on error
+          
+          echo "Building site..."
+          
           # Ensure dist directory exists
           mkdir -p dist
           
           # Build the site
-          npm run build
+          if ! npm run build; then
+            echo "::error::Build failed"
+            exit 1
+          fi
+          
+          # Verify build output
+          if [ ! -f "dist/index.html" ]; then
+            echo "::error::Build failed - index.html not found"
+            exit 1
+          fi
           
           # Create SPA 404 page with proper escaping
           cat > dist/404.html << 'EOF'

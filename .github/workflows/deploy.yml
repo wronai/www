@@ -51,24 +51,41 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Build the analyzer image
-          docker build -t repo-analyzer ./repo-analyzer
-          
-          # Create data directory
+          # Create data directory and ensure repos.json exists
           mkdir -p data
           
-          # Run analysis
-          docker run --rm \
-            -e "GITHUB_TOKEN=$GITHUB_TOKEN" \
-            -e "GITHUB_ORG=wronai" \
-            -v "$(pwd)/data:/data" \
-            repo-analyzer python /app/analyze_repo.py
+          # Create a default repos.json if it doesn't exist
+          if [ ! -f "repos.json" ]; then
+            echo '{"repositories": []}' > repos.json
+            echo "Created empty repos.json"
+          fi
           
-          # Update repos.json with analyzed data
-          if [ -f "data/repos_updated.json" ]; then
-            cp data/repos_updated.json repos.json
+          # Build the analyzer image
+          docker build -t repo-analyzer ./repo-analyzer || \
+            { echo "Warning: Failed to build repo-analyzer, continuing with existing repos.json" && exit 0; }
+          
+          # Run analysis if we have a token
+          if [ -n "$GITHUB_TOKEN" ]; then
+            docker run --rm \
+              -e "GITHUB_TOKEN=$GITHUB_TOKEN" \
+              -e "GITHUB_ORG=wronai" \
+              -v "$(pwd)/data:/data" \
+              repo-analyzer python /app/analyze_repo.py || \
+              echo "Warning: Repository analysis failed, continuing with existing data"
+            
+            # Update repos.json with analyzed data if available
+            if [ -f "data/repos_updated.json" ]; then
+              cp data/repos_updated.json repos.json
+              echo "Updated repos.json with fresh data"
+            fi
           else
-            echo "Warning: repos_updated.json not found, using existing repos.json"
+            echo "No GITHUB_TOKEN provided, using existing repos.json"
+          fi
+          
+          # Ensure repos.json is valid
+          if ! jq empty repos.json 2>/dev/null; then
+            echo "Error: repos.json is not valid JSON, creating empty version"
+            echo '{"repositories": []}' > repos.json
           fi
       
       - name: Set up Node.js
@@ -79,17 +96,32 @@ jobs:
       
       - name: Install and build
         run: |
-          # Install dependencies
-          npm ci --no-audit
+          # Validate package.json and dependencies
+          if [ ! -f "package.json" ]; then
+            echo "Error: package.json not found"
+            exit 1
+          fi
+          
+          # Install dependencies with validation
+          npm ci --no-audit || { echo "Error: npm ci failed" && exit 1; }
           
           # Build the production site
-          npm run build
+          echo "Running build..."
+          npm run build || { echo "Error: Build failed" && exit 1; }
           
-          # Create SPA 404 page
-          echo '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Redirecting...</title>' > dist/404.html
-          echo '<script>sessionStorage.redirect = location.href.replace(/\.html$/, "");</script>' >> dist/404.html
-          echo '<meta http-equiv="refresh" content="0;URL='\''/www/'"></head>' >> dist/404.html
-          echo '<body>Redirecting to <a href="/www/">home page</a>...</body></html>' >> dist/404.html
+          # Create SPA 404 page using a here-doc to avoid quote issues
+          cat > dist/404.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <title>Redirecting...</title>
+            <script>sessionStorage.redirect = location.href.replace(/\.html$/, "");</script>
+            <meta http-equiv="refresh" content="0;URL=/www/">
+          </head>
+          <body>Redirecting to <a href="/www/">home page</a>...</body>
+          </html>
+          EOF
           
           # Verify build output
           ls -la dist/

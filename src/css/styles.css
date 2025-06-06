@@ -293,14 +293,14 @@ p {
 
 /* Code blocks and copy buttons */
 .code-block {
-  @apply relative rounded-sm inline-flex items-center pr-6 py-0;
+  @apply relative rounded-xs inline-flex items-center pr-5 py-0;
   font-family: 'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-  font-size: 0.75rem;
-  line-height: 1.25;
+  font-size: 0.6875rem;
+  line-height: 1.2;
   background: var(--bg-tertiary);
   border: 1px solid var(--border-medium);
   transition: all 0.1s ease;
-  margin: 0.1rem 0;
+  margin: 0.05rem 0;
   max-width: 100%;
 }
 
@@ -325,20 +325,21 @@ p {
   text-overflow: ellipsis;
   max-width: 100%;
   overflow: hidden;
-  padding: 0.1rem 0.4rem;
+  padding: 0.05rem 0.3rem;
 }
 
 .code-block code {
   font-family: inherit;
   white-space: nowrap;
   color: var(--text-primary);
-  font-size: 0.8125rem;
-  line-height: 1.35;
+  font-size: 0.6875rem;
+  line-height: 1.2;
   font-weight: 500;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   display: inline;
+  letter-spacing: -0.01em;
 }
 
 .dark .code-block code {
@@ -346,9 +347,9 @@ p {
 }
 
 .code-block-header {
-  @apply text-[0.625rem] font-medium leading-none;
+  @apply text-[0.5625rem] font-medium leading-none;
   color: var(--text-muted);
-  margin-bottom: 0.1rem;
+  margin-bottom: 0.05rem;
   display: block;
   line-height: 1.1;
 }
@@ -359,15 +360,15 @@ p {
 }
 
 .code-block .copy-btn {
-  @apply absolute right-0.5 top-1/2 -translate-y-1/2 rounded-sm transition-colors flex items-center justify-center;
+  @apply absolute right-0.5 top-1/2 -translate-y-1/2 rounded-xs transition-colors flex items-center justify-center;
   background: var(--bg-primary);
   border: 1px solid var(--border-medium);
   color: var(--text-secondary);
   opacity: 0.9;
   transition: all 0.1s ease;
-  width: 16px;
-  height: 16px;
-  font-size: 0.5625rem;
+  width: 14px;
+  height: 14px;
+  font-size: 0.5rem;
   padding: 0;
   transform: translateY(-50%) scale(0.9);
 }

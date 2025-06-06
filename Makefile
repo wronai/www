@@ -1,4 +1,4 @@
-.PHONY: install dev build preview clean
+.PHONY: install dev build preview clean test-gh-actions setup-dev
 
 # Configuration
 NODE_ENV ?= development
@@ -56,5 +56,40 @@ preview:
 ## Clean build artifacts
 clean:
 	@echo "${YELLOW}Cleaning build artifacts...${RESET}"
-	@rm -rf ${DIST_DIR}
+	@rm -rf ${DIST_DIR} .act
 	@echo "${GREEN}✓ Clean complete${RESET}"
+
+## Set up development environment
+setup-dev:
+	@echo "${YELLOW}Setting up development environment...${RESET}"
+	@npm install -g @nektos/act
+	@echo "${GREEN}✓ Development tools installed${RESET}"
+
+## Test GitHub Actions locally
+test-gh-actions:
+	@echo "${YELLOW}Testing GitHub Actions locally...${RESET}"
+	@echo "${BLUE}Note: Docker must be installed and running${RESET}"
+	@if ! command -v act &> /dev/null; then \
+		echo "${YELLOW}act not found. Installing with npm...${RESET}"; \
+		npm install -g @nektos/act; \
+	fi
+	@echo "${BLUE}Running GitHub Actions locally...${RESET}"
+	@act -P ubuntu-latest=ghcr.io/catthehacker/ubuntu:act-latest
+
+## Create required directories and files for local testing
+setup-test-env:
+	@echo "${YELLOW}Setting up test environment...${RESET}"
+	@mkdir -p data
+	@if [ ! -f "repos.json" ]; then \
+		echo '{"repositories": []}' > repos.json; \
+		echo "${GREEN}✓ Created empty repos.json${RESET}"; \
+	else \
+		echo "${GREEN}✓ repos.json already exists${RESET}"; \
+	fi
+	@if [ ! -f ".env" ]; then \
+		echo "GITHUB_TOKEN=test-token" > .env; \
+		echo "${YELLOW}✓ Created .env with test token${RESET}"; \
+	else \
+		echo "${GREEN}✓ .env already exists${RESET}"; \
+	fi
+	@echo "${GREEN}✓ Test environment ready${RESET}"

@@ -48,12 +48,35 @@ jobs:
           fi
           npm ci --no-audit
           
-      - name: Create repos.json if missing
-        continue-on-error: true
+      - name: Setup repository data
         run: |
+          # Create data directory if it doesn't exist
+          mkdir -p data
+          
+          # Create or update repos.json with proper permissions
           if [ ! -f "repos.json" ]; then
             echo '{"repositories": []}' > repos.json
+            echo "Created empty repos.json"
+          else
+            echo "Using existing repos.json"
           fi
+          
+          # Ensure the file has the right permissions
+          chmod 644 repos.json
+          
+          # Verify JSON is valid
+          if ! jq empty repos.json 2>/dev/null; then
+            echo "Error: repos.json is not valid JSON"
+            echo '{"repositories": []}' > repos.json
+            echo "Reset to empty repos.json"
+          fi
+          
+          # Create a backup of the original repos.json
+          cp repos.json repos.json.bak
+          
+          # List the contents for debugging
+          echo "Repository data contents:"
+          ls -la repos.json* data/ || true
           
       - name: Build site
         run: |

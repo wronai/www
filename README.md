@@ -11,13 +11,15 @@ A static dashboard to showcase WronAI's open source projects with automatic repo
 - GitHub Actions workflow detection
 - Responsive design with dark mode support
 - Deployed as a static site on GitHub Pages
+- Local GitHub Actions testing support
 
 ## Local Development
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 18+ (LTS recommended)
 - npm or yarn
+- Docker (for local GitHub Actions testing)
 
 ### Getting Started
 
@@ -36,6 +38,68 @@ A static dashboard to showcase WronAI's open source projects with automatic repo
    ```bash
    make dev
    ```
+   This will start a local server at http://localhost:3000
+
+## Local GitHub Actions Testing
+
+You can test GitHub Actions workflows locally using `act`. This helps catch issues before pushing to the repository.
+
+### Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/) installed and running
+- Sufficient disk space (Docker images can be large)
+
+### Setup
+
+1. **Install the development tools**:
+   ```bash
+   make setup-dev
+   ```
+
+2. **Set up test environment**:
+   ```bash
+   make setup-test-env
+   ```
+   This creates necessary files like `repos.json` and `.env` with test values.
+
+### Running Tests
+
+1. **Test GitHub Actions workflows**:
+   ```bash
+   make test-gh-actions
+   ```
+   This will run all GitHub Actions workflows defined in `.github/workflows/`
+
+2. **Run a specific workflow**:
+   ```bash
+   act -W .github/workflows/static-deploy.yml
+   ```
+
+### Tips for Local Testing
+
+- The first run will download the GitHub Actions runner image (can take several minutes)
+- Use `-j` to run a specific job:
+  ```bash
+  act -j build
+  ```
+- Add `-v` for verbose output
+- Use `--rm` to remove containers after run
+
+## Available Make Commands
+
+Run `make help` to see all available commands:
+
+```
+make help        Show this help
+make install     Install dependencies
+make dev         Start development server
+make build       Build for production
+make preview     Preview production build
+make clean       Clean build artifacts
+make setup-dev   Set up development tools (act)
+make test-gh-actions  Test GitHub Actions locally
+make setup-test-env   Set up test environment
+```
 
 ## Available Commands
 

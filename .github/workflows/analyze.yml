@@ -63,6 +63,10 @@ jobs:
             -v "$(pwd)/data:/data" \
             repo-analyzer python /app/analyze_repo.py
           
+          # Debug: List contents of data directory
+          echo "Contents of data directory after analysis:"
+          ls -la data/
+          
           # Check if analysis produced new data
           if [ -f "data/repos_updated.json" ]; then
             # Compare with existing repos.json

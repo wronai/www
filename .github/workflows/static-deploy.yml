@@ -42,6 +42,10 @@ jobs:
       
       - name: Install dependencies
         run: |
+          # Generate package-lock.json if it doesn't exist
+          if [ ! -f package-lock.json ]; then
+            npm install --package-lock-only
+          fi
           npm ci
           
       - name: Create repos.json if missing

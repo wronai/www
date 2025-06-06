@@ -1,6 +1,7 @@
 # Dependencies
 node_modules/
 package-lock.json
+# package-lock.json  # Tracked for reliable dependency installation
 yarn.lock
 
 # Python

@@ -101,6 +101,63 @@ p {
   @apply bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm hover:shadow-md;
 }
 
+/* Code blocks and copy buttons */
+.code-block {
+  @apply bg-gray-50 dark:bg-gray-700 rounded-md p-3 mb-3 relative overflow-hidden;
+  font-family: 'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.code-block pre {
+  @apply m-0 p-0 overflow-x-auto;
+}
+
+.code-block code {
+  @apply text-gray-800 dark:text-gray-200;
+  font-family: inherit;
+}
+
+.code-block-header {
+  @apply flex items-center justify-between mb-2 text-xs text-gray-500 dark:text-gray-400;
+}
+
+.code-block .copy-btn {
+  @apply absolute top-2 right-2 p-1.5 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.code-block:hover .copy-btn {
+  opacity: 1;
+}
+
+.code-block .copy-btn.copied {
+  @apply text-green-600 dark:text-green-400;
+}
+
+.code-block .copy-btn:focus {
+  @apply outline-none ring-2 ring-indigo-500 ring-opacity-50;
+}
+
+/* Tooltip */
+.tooltip {
+  @apply invisible absolute bg-gray-900 text-white text-xs rounded py-1 px-2 -top-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.tooltip::after {
+  content: '';
+  @apply absolute top-full left-1/2 -ml-1 border-4 border-solid border-transparent border-t-gray-900;
+}
+
+.tooltip-visible {
+  @apply visible;
+  opacity: 1;
+}
+}
+
 .btn-outline {
   @apply border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700;
 }

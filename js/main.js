@@ -52,6 +52,7 @@ function createRepoCard(repo) {
     const updated = formatDate(repo.updatedAt);
     const hasInstallCommand = repo.installCommand && repo.installCommand.trim() !== '';
     const pypiUrl = repo.pypi ? `https://pypi.org/project/${repo.pypi}/` : '';
+    const httpUrl = repo.url.replace('github.com', 'github.com').replace('https://', 'https://github.com/');
     
     card.innerHTML = `
         <div class="p-6">
@@ -71,66 +72,137 @@ function createRepoCard(repo) {
                 <span>Updated ${updated}</span>
             </div>
             
+            <!-- HTTP Clone Section -->
+            <div class="mb-4">
+                <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-1">
+                    <div class="flex items-center">
+                        <i class="fas fa-link mr-2"></i>
+                        <span>HTTP</span>
+                    </div>
+                </div>
+                <div class="code-block group">
+                    <div class="code-block-header">
+                        <span>Clone via HTTPS</span>
+                    </div>
+                    <pre><code>${httpUrl}.git</code></pre>
+                    <button class="copy-btn" data-command="${httpUrl}.git" aria-label="Copy to clipboard">
+                        <i class="far fa-copy"></i>
+                        <span class="tooltip">Copy to clipboard</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- SSH Clone Section -->
+            <div class="mb-4">
+                <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-1">
+                    <div class="flex items-center">
+                        <i class="fas fa-key mr-2"></i>
+                        <span>SSH</span>
+                    </div>
+                </div>
+                <div class="code-block group">
+                    <div class="code-block-header">
+                        <span>Clone with SSH</span>
+                    </div>
+                    <pre><code>git@github.com:${repo.url.split('github.com/')[1]}.git</code></pre>
+                    <button class="copy-btn" data-command="git@github.com:${repo.url.split('github.com/')[1]}.git" aria-label="Copy to clipboard">
+                        <i class="far fa-copy"></i>
+                        <span class="tooltip">Copy to clipboard</span>
+                    </button>
+                </div>
+            </div>
+            
             ${hasInstallCommand ? `
             <div class="mb-4">
-                <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-1">
-                    <i class="fas fa-terminal mr-2"></i>
-                    <span>Install:</span>
-                </div>
-                <div class="bg-gray-50 dark:bg-gray-700 rounded-md p-2 mb-2">
-                    <div class="flex items-center justify-between">
-                        <code class="text-sm font-mono text-gray-800 dark:text-gray-200">${repo.installCommand}</code>
-                        <button class="copy-btn ml-2 p-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" 
-                                data-command="${repo.installCommand}">
-                            <i class="far fa-copy"></i>
-                        </button>
+                <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-1">
+                    <div class="flex items-center">
+                        <i class="fas fa-terminal mr-2"></i>
+                        <span>Install with pip</span>
                     </div>
+                </div>
+                <div class="code-block group">
+                    <div class="code-block-header">
+                        <span>Run in your terminal</span>
+                    </div>
+                    <pre><code>${repo.installCommand}</code></pre>
+                    <button class="copy-btn" data-command="${repo.installCommand}" aria-label="Copy to clipboard">
+                        <i class="far fa-copy"></i>
+                        <span class="tooltip">Copy to clipboard</span>
+                    </button>
                 </div>
             </div>` : ''}
             
-            <div class="flex flex-wrap gap-2">
+            <div class="flex flex-wrap gap-2 mt-4">
                 <a href="${repo.url}" target="_blank" rel="noopener noreferrer" 
                    class="inline-flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
-                    <i class="fab fa-github mr-2"></i> Code
+                    <i class="fab fa-github mr-2"></i> View on GitHub
                 </a>
                 
                 ${repo.website ? `
                 <a href="${repo.website}" target="_blank" rel="noopener noreferrer"
                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors">
-                    <i class="fas fa-external-link-alt mr-2"></i> Website
+                    <i class="fas fa-external-link-alt mr-2"></i> View Website
                 </a>` : ''}
                 
                 ${pypiUrl ? `
                 <a href="${pypiUrl}" target="_blank" rel="noopener noreferrer"
                    class="inline-flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
-                    <i class="fab fa-python mr-2"></i> PyPI
+                    <i class="fab fa-python mr-2"></i> View on PyPI
                 </a>` : ''}
-                
-                <div class="relative group">
-                    <button class="copy-btn inline-flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
-                            data-command="${repo.cloneCommand}">
-                        <i class="fas fa-clone mr-2"></i> Clone
-                    </button>
-                    <span class="copy-tooltip">Click to copy</span>
-                </div>
             </div>
         </div>
     `;
     
-    // Add click handler for copy buttons
+    // Add click handler for copy buttons with improved feedback
     card.querySelectorAll('.copy-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        const tooltip = btn.querySelector('.tooltip');
+        const icon = btn.querySelector('i');
+        const originalIcon = icon ? icon.className : '';
+        
+        const showTooltip = (text) => {
+            if (tooltip) {
+                tooltip.textContent = text;
+                tooltip.classList.add('tooltip-visible');
+            }
+        };
+        
+        const hideTooltip = () => {
+            if (tooltip) {
+                tooltip.classList.remove('tooltip-visible');
+            }
+        };
+        
+        btn.addEventListener('mouseenter', () => showTooltip('Copy to clipboard'));
+        btn.addEventListener('mouseleave', hideTooltip);
+        
+        btn.addEventListener('click', async (e) => {
             e.preventDefault();
             const command = btn.getAttribute('data-command');
-            navigator.clipboard.writeText(command).then(() => {
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-check mr-2"></i> Copied!';
-                btn.classList.add('bg-green-100', 'text-green-800', 'border-green-200');
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.classList.remove('bg-green-100', 'text-green-800', 'border-green-200');
-                }, 2000);
-            });
+            
+            try {
+                await navigator.clipboard.writeText(command);
+                
+                // Visual feedback
+                if (icon) {
+                    const originalClass = icon.className;
+                    icon.className = 'fas fa-check';
+                    btn.classList.add('copied');
+                    
+                    // Show success tooltip
+                    showTooltip('Copied!');
+                    
+                    // Reset after delay
+                    setTimeout(() => {
+                        if (icon) icon.className = originalClass;
+                        btn.classList.remove('copied');
+                        hideTooltip();
+                    }, 2000);
+                }
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                showTooltip('Failed to copy');
+                setTimeout(hideTooltip, 2000);
+            }
         });
     });
     

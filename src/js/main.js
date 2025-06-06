@@ -133,7 +133,7 @@ function createRepoCard(repo) {
             
             <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">${repo.description || 'No description provided'}</p>
             
-            <div class="flex flex-wrap items-center text-sm text-gray-500 dark:text-gray-400 mb-4 gap-2">
+            <div class="flex flex-wrap items-center text-sm text-gray-900 dark:text-gray-400 mb-4 gap-2">
                 <span class="flex items-center">
                     <span class="language-dot" style="background-color: ${color}"></span>
                     ${repo.language || 'Unknown'}

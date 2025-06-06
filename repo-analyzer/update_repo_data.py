@@ -44,9 +44,18 @@ def merge_repo_data(original_repos: list, analyzed_repos: list) -> list:
         if 'package_manager' in analyzed:
             merged['package_manager'] = analyzed['package_manager']
         
-        # Update PyPI info if available
+        # Update package info if available
         if 'package_name' in analyzed and analyzed['package_name']:
-            merged['pypi'] = analyzed['package_name'] if analyzed.get('on_pypi') else ''
+            package_name = analyzed['package_name']
+            package_manager = analyzed.get('package_manager')
+            
+            if package_manager in ['pip', 'poetry'] and analyzed.get('on_pypi'):
+                merged['pypi'] = package_name
+                merged['pypi_url'] = f'https://pypi.org/project/{package_name}/'
+            elif package_manager == 'npm':
+                merged['npm_url'] = f'https://www.npmjs.com/package/{package_name}'
+            elif package_manager == 'go':
+                merged['go_pkg_url'] = f'https://pkg.go.dev/{package_name}'
         
         # Add other metadata
         for field in ['has_dockerfile', 'has_docker_compose', 'has_github_actions']:

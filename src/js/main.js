@@ -121,7 +121,9 @@ function createRepoCard(repo) {
     const color = languageColors[repo.language] || languageColors.Other;
     const updated = formatDate(repo.updatedAt);
     const hasInstallCommand = repo.installCommand && repo.installCommand.trim() !== '';
-    const pypiUrl = repo.pypi ? `https://pypi.org/project/${repo.pypi}/` : '';
+    const pypiUrl = repo.pypi_url || (repo.pypi ? `https://pypi.org/project/${repo.pypi}/` : '');
+    const npmUrl = repo.npm_url || '';
+    const goPkgUrl = repo.go_pkg_url || '';
     const httpUrl = repo.url.replace('github.com', 'github.com').replace('https://', 'https://github.com/');
     
     card.innerHTML = `
@@ -187,7 +189,7 @@ function createRepoCard(repo) {
                 <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-1">
                     <div class="flex items-center">
                         <i class="fas fa-terminal mr-2"></i>
-                        <span>Install with pip</span>
+                        <span>Install with ${repo.installCommand.trim().split(' ')[0]}</span>
                     </div>
                 </div>
                 <div class="code-block group" data-command="${repo.installCommand}">
@@ -218,6 +220,18 @@ function createRepoCard(repo) {
                 <a href="${pypiUrl}" target="_blank" rel="noopener noreferrer"
                    class="inline-flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
                     <i class="fab fa-python mr-2"></i> View on PyPI
+                </a>` : ''}
+                
+                ${npmUrl ? `
+                <a href="${npmUrl}" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
+                    <i class="fab fa-npm mr-2"></i> View on npm
+                </a>` : ''}
+                
+                ${goPkgUrl ? `
+                <a href="${goPkgUrl}" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
+                    <i class="fab fa-golang mr-2"></i> View on pkg.go.dev
                 </a>` : ''}
             </div>
         </div>

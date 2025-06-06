@@ -2,16 +2,16 @@
   "repositories": [
     {
       "name": "airun",
-      "description": "AI-powered code execution and automation tool",
+      "description": "",
       "url": "https://github.com/wronai/airun",
-      "website": "",
+      "website": "https://wronai.github.io/airun/",
       "updatedAt": "2025-06-04T20:45:34Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",
       "pypi": "",
       "cloneCommand": "git clone https://github.com/wronai/airun.git",
-      "installCommand": ""
+      "installCommand": "pip install airun"
     },
     {
       "name": "allama",
@@ -60,7 +60,7 @@
       "updatedAt": "2025-05-29T22:48:29Z",
       "isArchived": false,
       "isFork": false,
-      "language": "Documentation",
+      "language": "Other",
       "pypi": "",
       "cloneCommand": "git clone https://github.com/wronai/docs.git",
       "installCommand": ""
@@ -76,11 +76,11 @@
       "language": "Python",
       "pypi": "",
       "cloneCommand": "git clone https://github.com/wronai/domd.git",
-      "installCommand": ""
+      "installCommand": "pip install domd"
     },
     {
       "name": "git2wp",
-      "description": "Publish the git changes as a WordPress article",
+      "description": "publish the git changes as a wordpress article",
       "url": "https://github.com/wronai/git2wp",
       "website": "https://wronai.github.io/git2wp/",
       "updatedAt": "2025-06-05T17:59:28Z",
@@ -93,7 +93,7 @@
     },
     {
       "name": "gollm",
-      "description": "goLLM - Go Learn, Lead, Master! 🚀 Intelligent Python code quality guardian with LLM integration, automated TODO management and CHANGELOG generation.",
+      "description": "goLLM - Go Learn, Lead, Master!  \ud83d\ude80 Intelligent Python code quality guardian with LLM integration, automated TODO management and CHANGELOG generation.",
       "url": "https://github.com/wronai/gollm",
       "website": "https://wronai.github.io/gollm/",
       "updatedAt": "2025-06-04T16:45:30Z",
@@ -119,7 +119,7 @@
     },
     {
       "name": "llm-demo",
-      "description": "Minimalne rozwiązanie z Ollama + Streamlit, by stworzyć własny model LLM",
+      "description": "minimalne rozwi\u0105zanie z Ollama + Streamlit, by stworzy\u0107 w\u0142asny model LLM",
       "url": "https://github.com/wronai/llm-demo",
       "website": "https://wronai.github.io/llm-demo/",
       "updatedAt": "2025-06-04T22:04:06Z",
@@ -128,11 +128,11 @@
       "language": "Python",
       "pypi": "",
       "cloneCommand": "git clone https://github.com/wronai/llm-demo.git",
-      "installCommand": ""
+      "installCommand": "pip install llm-demo"
     },
     {
       "name": "ollama",
-      "description": "Serve ollama on embedded without pain",
+      "description": "serve ollama on embedded without pain",
       "url": "https://github.com/wronai/ollama",
       "website": "https://wronai.github.io/ollama/",
       "updatedAt": "2025-06-04T12:54:38Z",
@@ -154,11 +154,11 @@
       "language": "Python",
       "pypi": "wronai-quality",
       "cloneCommand": "git clone https://github.com/wronai/quality.git",
-      "installCommand": "pip install wronai-quality"
+      "installCommand": "pip install quality"
     },
     {
       "name": "shellguard",
-      "description": "Shell Guardian for Safe Development - Your shell's bodyguard",
+      "description": "\"Shell Guardian for Safe Development\" - \"Your shell's bodyguard\"",
       "url": "https://github.com/wronai/shellguard",
       "website": "https://wronai.github.io/shellguard/",
       "updatedAt": "2025-06-05T15:55:56Z",
@@ -184,7 +184,7 @@
     },
     {
       "name": "taskguard",
-      "description": "Task management and automation tool",
+      "description": "",
       "url": "https://github.com/wronai/taskguard",
       "website": "https://wronai.github.io/taskguard/",
       "updatedAt": "2025-06-05T19:43:44Z",
@@ -193,14 +193,14 @@
       "language": "Python",
       "pypi": "",
       "cloneCommand": "git clone https://github.com/wronai/taskguard.git",
-      "installCommand": ""
+      "installCommand": "pip install taskguard"
     },
     {
       "name": "www",
-      "description": "Edge computing LLM for embedded devices such as RPI",
+      "description": "edge computing LLM for embedded devices such RPI",
       "url": "https://github.com/wronai/www",
       "website": "https://wronai.github.io/www/",
-      "updatedAt": "2025-06-04T16:59:32Z",
+      "updatedAt": "2025-06-06T11:37:18Z",
       "isArchived": false,
       "isFork": false,
       "language": "JavaScript",

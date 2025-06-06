@@ -48,12 +48,22 @@ function showError(message) {
 // Fetch repository data
 async function loadRepos() {
     try {
-        // Try loading from the root first (for GitHub Pages)
+        // Try loading from the current directory first (for GitHub Pages)
         let response = await fetch(`${BASE_URL}/repos.json`);
         
-        // If that fails, try the data directory
+        // If that fails, try the data directory with the BASE_URL
         if (!response.ok) {
             response = await fetch(`${BASE_URL}/data/repos_updated.json`);
+        }
+        
+        // If still failing, try without BASE_URL (for local development)
+        if (!response.ok) {
+            response = await fetch('/repos.json');
+        }
+        
+        // Last attempt: try the data directory without BASE_URL
+        if (!response.ok) {
+            response = await fetch('/data/repos_updated.json');
         }
         
         if (!response.ok) {
@@ -67,6 +77,10 @@ async function loadRepos() {
             return data;
         } else if (data && Array.isArray(data.repositories)) {
             return data.repositories;
+        } else if (data && data.repositories === undefined) {
+            // Handle case where repos.json exists but is empty
+            console.warn('repos.json exists but is empty or malformed');
+            return [];
         } else {
             throw new Error('Invalid data format in JSON');
         }

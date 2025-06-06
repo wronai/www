@@ -47,46 +47,72 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       
+      - name: Setup repository data
+        id: setup-repo-data
+        run: |
+          # Create necessary directories
+          mkdir -p data dist
+          
+          # Create a default repos.json if it doesn't exist or is invalid
+          if [ ! -f "repos.json" ] || ! jq empty repos.json 2>/dev/null; then
+            echo '{"repositories": []}' > repos.json
+            echo "Created/Reset repos.json"
+          fi
+          
+          # Ensure repos.json is copied to data directory for the analyzer
+          cp repos.json data/repos.json || true
+          
+          # Verify files exist
+          echo "Repository data status:"
+          ls -la repos.json data/repos.json 2>/dev/null || true
+          
+          # Set output for next steps
+          echo "repo_data_setup=done" >> $GITHUB_OUTPUT
+      
       - name: Build and run repository analysis
+        if: steps.setup-repo-data.outputs.repo_data_setup == 'done'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Create data directory and ensure repos.json exists
-          mkdir -p data
-          
-          # Create a default repos.json if it doesn't exist
-          if [ ! -f "repos.json" ]; then
-            echo '{"repositories": []}' > repos.json
-            echo "Created empty repos.json"
-          fi
+          set -e  # Exit on error
           
           # Build the analyzer image
-          docker build -t repo-analyzer ./repo-analyzer || \
-            { echo "Warning: Failed to build repo-analyzer, continuing with existing repos.json" && exit 0; }
+          echo "Building repository analyzer..."
+          if ! docker build -t repo-analyzer ./repo-analyzer; then
+            echo "Warning: Failed to build repo-analyzer, continuing with existing data"
+            exit 0
+          fi
           
-          # Run analysis if we have a token
+          # Only run analysis if we have a token
           if [ -n "$GITHUB_TOKEN" ]; then
-            docker run --rm \
+            echo "Running repository analysis..."
+            if ! docker run --rm \
               -e "GITHUB_TOKEN=$GITHUB_TOKEN" \
               -e "GITHUB_ORG=wronai" \
               -v "$(pwd)/data:/data" \
-              repo-analyzer python /app/analyze_repo.py || \
+              repo-analyzer python /app/analyze_repo.py; then
               echo "Warning: Repository analysis failed, continuing with existing data"
-            
-            # Update repos.json with analyzed data if available
-            if [ -f "data/repos_updated.json" ]; then
-              cp data/repos_updated.json repos.json
-              echo "Updated repos.json with fresh data"
+            else
+              # Update repos.json with analyzed data if available
+              if [ -f "data/repos_updated.json" ]; then
+                cp data/repos_updated.json repos.json
+                echo "Updated repos.json with fresh data"
+              fi
             fi
           else
             echo "No GITHUB_TOKEN provided, using existing repos.json"
           fi
           
-          # Ensure repos.json is valid
+          # Final validation of repos.json
           if ! jq empty repos.json 2>/dev/null; then
-            echo "Error: repos.json is not valid JSON, creating empty version"
+            echo "Error: repos.json is not valid JSON, resetting to empty"
             echo '{"repositories": []}' > repos.json
           fi
+          
+          # Copy to dist directory for the build
+          mkdir -p dist/data
+          cp repos.json dist/repos.json
+          cp repos.json dist/data/repos_updated.json
       
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -96,35 +122,76 @@ jobs:
       
       - name: Install and build
         run: |
-          # Validate package.json and dependencies
+          # Debug environment
+          echo "Node version: $(node --version)"
+          echo "NPM version: $(npm --version)"
+          
+          # Validate package.json
           if [ ! -f "package.json" ]; then
-            echo "Error: package.json not found"
+            echo "::error::package.json not found"
             exit 1
           fi
           
-          # Install dependencies with validation
-          npm ci --no-audit || { echo "Error: npm ci failed" && exit 1; }
+          # Install dependencies
+          echo "Installing dependencies..."
+          if ! npm ci --no-audit; then
+            echo "::error::npm ci failed"
+            exit 1
+          fi
+          
+          # Verify build directory exists
+          mkdir -p dist
           
           # Build the production site
-          echo "Running build..."
-          npm run build || { echo "Error: Build failed" && exit 1; }
+          echo "Building production site..."
+          if ! npm run build; then
+            echo "::error::Build failed"
+            exit 1
+          fi
           
-          # Create SPA 404 page using echo commands
-          mkdir -p dist
-          echo '<!DOCTYPE html>' > dist/404.html
-          echo '<html>' >> dist/404.html
-          echo '<head>' >> dist/404.html
-          echo '  <meta charset="utf-8">' >> dist/404.html
-          echo '  <title>Redirecting...</title>' >> dist/404.html
-          echo '  <script>sessionStorage.redirect = location.href.replace(/\.html$/, "");</script>' >> dist/404.html
-          echo '  <meta http-equiv="refresh" content="0;URL=/www/">' >> dist/404.html
-          echo '</head>' >> dist/404.html
-          echo '<body>Redirecting to <a href="/www/">home page</a>...</body>' >> dist/404.html
-          echo '</html>' >> dist/404.html
+          # Create SPA 404 page
+          cat > dist/404.html << 'EOL'
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <title>Redirecting...</title>
+            <script>sessionStorage.redirect = location.href.replace(/\.html$/, "");</script>
+            <meta http-equiv="refresh" content="0;URL=/www/">
+          </head>
+          <body>Redirecting to <a href="/www/">home page</a>...</body>
+          </html>
+          EOL
           
-          # Verify build output
+          # Ensure index.html exists
+          if [ ! -f "dist/index.html" ]; then
+            echo "::warning::index.html not found in dist/, creating a basic one"
+            cat > dist/index.html << 'EOL'
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <meta charset="utf-8">
+              <title>WronAI Projects</title>
+              <meta name="viewport" content="width=device-width, initial-scale=1">
+              <meta http-equiv="refresh" content="0;URL='/www/'">
+            </head>
+            <body>
+              <p>Redirecting to <a href="/www/">WronAI Projects</a>...</p>
+            </body>
+            </html>
+            EOL
+          fi
+          
+          # Debug: Show dist contents
+          echo "Build output in dist/:"
           ls -la dist/
-          [ -f dist/index.html ] || { echo "Error: index.html not found in dist/" && exit 1; }
+          
+          # Verify critical files exist
+          for file in index.html main.js styles.css; do
+            if [ ! -f "dist/$file" ]; then
+              echo "::warning::$file not found in dist/"
+            fi
+          done
       
       - name: Setup Pages
         uses: actions/configure-pages@v4

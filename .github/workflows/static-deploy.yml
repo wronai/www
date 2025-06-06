@@ -45,19 +45,20 @@ jobs:
         run: |
           set -e  # Exit on error
           
-          echo "Setting up Node.js environment..."
+          echo "Current working directory: $(pwd)"
+          echo "Contents of current directory:"
+          ls -la
           
-          # Generate package-lock.json if it doesn't exist
-          if [ ! -f "package-lock.json" ]; then
-            echo "Generating package-lock.json..."
-            npm install --package-lock-only
-          fi
+          echo "\nSetting up Node.js environment..."
           
-          echo "Installing dependencies..."
-          if ! npm ci --no-audit; then
-            echo "::error::Failed to install dependencies"
-            exit 1
-          fi
+          # Ensure we're in the repository root
+          cd $GITHUB_WORKSPACE
+          
+          echo "\nContents of repository root:"
+          ls -la
+          
+          echo "\nInstalling dependencies..."
+          npm ci --no-audit
           
       - name: Install jq for JSON processing
         run: |

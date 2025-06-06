@@ -1,25 +1,23 @@
-# WronAI Projects
+# WronAI Projects Dashboard
 
-![WronAI Logo](https://github.com/user-attachments/assets/18eece0a-13b6-4ab7-8f27-a48ec36406a8)
-
-A showcase of all open-source projects by the WronAI organization, focusing on AI, ML, and edge computing solutions.
+A dashboard to showcase and manage WronAI's open source projects with automatic repository analysis.
 
 ## Features
 
-- **Modern, Responsive Design**: Looks great on all devices
-- **Project Filtering**: Filter projects by programming language
-- **Quick Access**: Direct links to GitHub repositories and project websites
-- **Real-time Updates**: Shows when each project was last updated
-- **Clean UI**: Built with Tailwind CSS for a clean, modern look
+- Automatic repository analysis (Python, Node.js, Go)
+- Package manager detection (pip, npm, yarn, poetry)
+- PyPI package verification
+- Docker support detection
+- GitHub Actions workflow detection
+- Responsive design with dark mode support
 
-## Technologies Used
+## Prerequisites
 
-- HTML5, CSS3, JavaScript (ES6+)
-- [Tailwind CSS](https://tailwindcss.com/) for styling
-- [Font Awesome](https://fontawesome.com/) for icons
-- GitHub API for repository data
+- Docker and Docker Compose
+- Python 3.8+
+- GitHub Personal Access Token with `repo` scope
 
-## Local Development
+## Getting Started
 
 1. Clone the repository:
    ```bash
@@ -27,12 +25,60 @@ A showcase of all open-source projects by the WronAI organization, focusing on A
    cd www
    ```
 
-2. Open `index.html` in your browser
+2. Set up your GitHub token (required for API access):
+   ```bash
+   export GITHUB_TOKEN=your_github_token_here
+   ```
 
-## Contributing
+3. Build and run the development server:
+   ```bash
+   make install
+   make dev
+   ```
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+## Available Commands
+
+- `make install` - Install dependencies
+- `make dev` - Start development server
+- `make build` - Build for production
+- `make analyze` - Analyze repositories and update data
+- `make deploy` - Deploy to production
+- `make clean` - Clean build artifacts
+
+## Repository Analysis
+
+The system automatically analyzes repositories to extract:
+
+- Package information (name, version)
+- Dependencies
+- Docker support
+- CI/CD configuration
+
+To manually trigger repository analysis:
+
+```bash
+make analyze
+```
+
+This will:
+1. Clone and analyze all repositories
+2. Update `repos.json` with the latest information
+3. Create a backup of the previous data
+
+## Development
+
+### Adding a New Repository
+
+1. Add the repository to `repos.json`
+2. Run `make analyze` to update the metadata
+3. Commit and push the changes
+
+### Customizing the Dashboard
+
+- Edit `index.html` for the main structure
+- Modify `css/styles.css` for styling
+- Update `js/main.js` for interactivity
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE).
+MIT

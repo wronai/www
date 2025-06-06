@@ -26,7 +26,20 @@ fs.copySync(PUBLIC_DIR, DIST_DIR, { overwrite: true });
 // Copy repository data
 if (fs.existsSync(REPO_DATA_FILE)) {
   console.log('Copying repository data...');
+  // Copy to both root and data directory for backward compatibility
+  fs.ensureDirSync(path.join(DIST_DIR, 'data'));
   fs.copyFileSync(REPO_DATA_FILE, path.join(DIST_DIR, 'repos.json'));
+  fs.copyFileSync(REPO_DATA_FILE, path.join(DIST_DIR, 'data', 'repos_updated.json'));
+  
+  // Verify the JSON is valid
+  try {
+    const jsonData = fs.readJsonSync(REPO_DATA_FILE);
+    console.log(`Repository data loaded: ${Object.keys(jsonData.repositories || jsonData).length} repositories found`);
+  } catch (error) {
+    console.error('Error parsing repos.json:', error);
+  }
+} else {
+  console.warn('Warning: repos.json not found. The site will not display any repository data.');
 }
 
 // Create a simple index.html if it doesn't exist

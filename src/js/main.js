@@ -1,6 +1,9 @@
 // Load repository data from JSON file
 let repos = [];
 
+// Get base URL from config or use empty string for local development
+const BASE_URL = window.BASE_URL || '';
+
 // Language colors mapping
 const languageColors = {
     'Python': '#3572A5',
@@ -14,14 +17,63 @@ const languageColors = {
     'Other': '#6e5494'
 };
 
+// Show error message to the user
+function showError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative';
+    errorDiv.role = 'alert';
+    
+    const strong = document.createElement('strong');
+    strong.className = 'font-bold';
+    strong.textContent = 'Error: ';
+    
+    const span = document.createElement('span');
+    span.className = 'block sm:inline';
+    span.textContent = message;
+    
+    errorDiv.appendChild(strong);
+    errorDiv.appendChild(span);
+    
+    // Add to the top of the container
+    const container = document.querySelector('.container');
+    if (container.firstChild) {
+        container.insertBefore(errorDiv, container.firstChild);
+    } else {
+        container.appendChild(errorDiv);
+    }
+    
+    console.error(message);
+}
+
 // Fetch repository data
 async function loadRepos() {
     try {
-        const response = await fetch('repos.json');
+        // Try loading from the root first (for GitHub Pages)
+        let response = await fetch(`${BASE_URL}/repos.json`);
+        
+        // If that fails, try the data directory
+        if (!response.ok) {
+            response = await fetch(`${BASE_URL}/data/repos_updated.json`);
+        }
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const data = await response.json();
-        return data.repositories;
+        
+        // Handle both direct array and { repositories: [...] } formats
+        if (Array.isArray(data)) {
+            return data;
+        } else if (data && Array.isArray(data.repositories)) {
+            return data.repositories;
+        } else {
+            throw new Error('Invalid data format in JSON');
+        }
     } catch (error) {
-        console.error('Error loading repository data:', error);
+        const errorMessage = `Error loading repository data: ${error.message}`;
+        showError(errorMessage);
+        console.error('Full error:', error);
         return [];
     }
 }

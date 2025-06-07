@@ -59,6 +59,27 @@ make update-repos  Update repository data
 make setup-dev     Set up development tools
 make test-gh-actions  Test GitHub Actions locally
 make setup-test-env  Set up test environment
+./combine_readmes.sh [depth]  Combine all README.md files (default depth: 2)
+```
+
+### Combine READMEs
+
+The `combine_readmes.sh` script combines all README.md files in subdirectories into a single SUM.md file. It respects `.gitignore` files and allows you to control the search depth.
+
+#### Features:
+- Combines README.md files from subdirectories into a single file
+- Respects `.gitignore` rules to skip ignored directories
+- Configurable search depth (default: 2 levels deep)
+- Handles non-git directories gracefully
+- Shows progress during processing
+
+#### Usage:
+```bash
+# Default (2 levels deep)
+./combine_readmes.sh
+
+# Specify custom depth (e.g., 3 levels)
+./combine_readmes.sh 3
 ```
 
 ### Repository Analysis

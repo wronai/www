@@ -1,5 +1,11 @@
 # Changelog
 
+## [v2025.06.07] - 2025-06-07
+
+### Added
+- Added `2025-06`: Summaries and Plans ([GitHub](https://github.com/wronai/2025-06))
+- Added `inceptor`: "We need to go deeper" ([GitHub](https://github.com/wronai/inceptor))
+
 ## [v2025.06.06] - 2025-06-06
 
 ### Added

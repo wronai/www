@@ -1,6 +1,19 @@
 {
   "repositories": [
     {
+      "name": "2025-06",
+      "description": "Summaries and Plans",
+      "url": "https://github.com/wronai/2025-06",
+      "website": "https://wronai.github.io/2025-06/",
+      "updatedAt": "2025-06-07T09:19:20Z",
+      "isArchived": false,
+      "isFork": false,
+      "language": "Other",
+      "pypi": "",
+      "cloneCommand": "git clone https://github.com/wronai/2025-06.git",
+      "installCommand": ""
+    },
+    {
       "name": "airun",
       "description": "AIRun is a powerful command-line tool that can execute scripts in multiple languages (Python, Shell, Node.js, PHP) with intelligent AI-powered error detection and automatic fixing capabilities.",
       "url": "https://github.com/wronai/airun",
@@ -70,7 +83,7 @@
       "description": "To-DoMD automatically detects and tests project commands from various configuration files, then generates a detailed TODO.md file for failed commands with error reports and suggested fixes.",
       "url": "https://github.com/wronai/domd",
       "website": "https://wronai.github.io/domd/",
-      "updatedAt": "2025-06-06T20:28:25Z",
+      "updatedAt": "2025-06-07T09:17:16Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",
@@ -103,6 +116,19 @@
       "pypi": "gollm",
       "cloneCommand": "git clone https://github.com/wronai/gollm.git",
       "installCommand": "pip install gollm"
+    },
+    {
+      "name": "inceptor",
+      "description": "\"We need to go deeper\"",
+      "url": "https://github.com/wronai/inceptor",
+      "website": "https://wronai.github.io/inceptor/",
+      "updatedAt": "2025-06-07T00:01:53Z",
+      "isArchived": false,
+      "isFork": false,
+      "language": "HTML",
+      "pypi": "",
+      "cloneCommand": "git clone https://github.com/wronai/inceptor.git",
+      "installCommand": ""
     },
     {
       "name": "llm",
@@ -200,7 +226,7 @@
       "description": "edge computing LLM for embedded devices such RPI",
       "url": "https://github.com/wronai/www",
       "website": "https://wronai.github.io/www/",
-      "updatedAt": "2025-06-06T20:38:39Z",
+      "updatedAt": "2025-06-06T20:44:30Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",

@@ -5,13 +5,13 @@
       "description": "Summaries and Plans",
       "url": "https://github.com/wronai/2025-06",
       "website": "https://wronai.github.io/2025-06/",
-      "updatedAt": "2025-06-07T09:19:20Z",
+      "updatedAt": "2025-06-07T14:50:51Z",
       "isArchived": false,
       "isFork": false,
-      "language": "Other",
+      "language": "Python",
       "pypi": "",
       "cloneCommand": "git clone https://github.com/wronai/2025-06.git",
-      "installCommand": ""
+      "installCommand": "pip install 2025-06"
     },
     {
       "name": "airun",
@@ -83,13 +83,26 @@
       "description": "To-DoMD automatically detects and tests project commands from various configuration files, then generates a detailed TODO.md file for failed commands with error reports and suggested fixes.",
       "url": "https://github.com/wronai/domd",
       "website": "https://wronai.github.io/domd/",
-      "updatedAt": "2025-06-07T09:17:16Z",
+      "updatedAt": "2025-06-07T13:30:36Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",
       "pypi": "",
       "cloneCommand": "git clone https://github.com/wronai/domd.git",
       "installCommand": "pip install domd"
+    },
+    {
+      "name": "ellma",
+      "description": "Evolutionary Local LLM Agent - Self-improving AI assistant",
+      "url": "https://github.com/wronai/ellma",
+      "website": "https://wronai.github.io/ellma/",
+      "updatedAt": "2025-06-07T14:43:23Z",
+      "isArchived": false,
+      "isFork": false,
+      "language": "Python",
+      "pypi": "",
+      "cloneCommand": "git clone https://github.com/wronai/ellma.git",
+      "installCommand": "pip install ellma"
     },
     {
       "name": "git2wp",
@@ -222,11 +235,24 @@
       "installCommand": "pip install taskguard"
     },
     {
+      "name": "weekly",
+      "description": "Weekly helps developers maintain high code quality by automatically detecting issues and suggesting improvements. It analyzes various aspects of your Python projects and generates actionable reports.",
+      "url": "https://github.com/wronai/weekly",
+      "website": "https://wronai.github.io/weekly/",
+      "updatedAt": "2025-06-07T10:27:08Z",
+      "isArchived": false,
+      "isFork": false,
+      "language": "Other",
+      "pypi": "",
+      "cloneCommand": "git clone https://github.com/wronai/weekly.git",
+      "installCommand": ""
+    },
+    {
       "name": "www",
       "description": "edge computing LLM for embedded devices such RPI",
       "url": "https://github.com/wronai/www",
       "website": "https://wronai.github.io/www/",
-      "updatedAt": "2025-06-06T20:44:30Z",
+      "updatedAt": "2025-06-07T09:28:50Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",

@@ -3,6 +3,15 @@
 ## [v2025.06.07] - 2025-06-07
 
 ### Added
+- Added `ellma`: Evolutionary Local LLM Agent - Self-improving AI assistant ([GitHub](https://github.com/wronai/ellma))
+- Added `weekly`: Weekly helps developers maintain high code quality by automatically detecting issues and suggesting improvements. It analyzes various aspects of your Python projects and generates actionable reports. ([GitHub](https://github.com/wronai/weekly))
+
+### Changed
+- Updated `2025-06`: language: 'Other' → 'Python'
+
+## [v2025.06.07] - 2025-06-07
+
+### Added
 - Added `2025-06`: Summaries and Plans ([GitHub](https://github.com/wronai/2025-06))
 - Added `inceptor`: "We need to go deeper" ([GitHub](https://github.com/wronai/inceptor))
 

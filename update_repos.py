@@ -98,10 +98,17 @@ def get_github_repos() -> List[Dict[str, Any]]:
             
             # Check if this is a Python package by analyzing the repository
             try:
-                from repo_analyzer.analyze_repo import RepoAnalyzer
+                import sys
+                import os
+                # Add the repo-analyzer directory to the Python path
+                analyzer_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'repo-analyzer')
+                sys.path.insert(0, analyzer_path)
+                
+                # Import the analyzer module directly
+                import analyze_repo
                 
                 # Initialize the analyzer
-                analyzer = RepoAnalyzer()
+                analyzer = analyze_repo.RepoAnalyzer()
                 
                 # Analyze the repository
                 metadata = analyzer.analyze_repository(repo['url'])
@@ -111,6 +118,9 @@ def get_github_repos() -> List[Dict[str, Any]]:
                     pypi_name = metadata['package_name']
                 else:
                     pypi_name = None
+                    
+                # Clean up the path
+                sys.path.remove(analyzer_path)
             except Exception as e:
                 print(f"Error analyzing repository {name}: {e}")
                 pypi_name = None

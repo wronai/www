@@ -127,9 +127,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "JavaScript",
-      "pypi": "",
+      "pypi": "git2wp",
       "cloneCommand": "git clone https://github.com/wronai/git2wp.git",
-      "installCommand": ""
+      "installCommand": "",
+      "pypi_url": "https://pypi.org/project/git2wp/"
     },
     {
       "name": "gollm",
@@ -156,7 +157,7 @@
       "language": "HTML",
       "pypi": "inceptor",
       "cloneCommand": "git clone https://github.com/wronai/inceptor.git",
-      "installCommand": "pip install inceptor",
+      "installCommand": "",
       "pypi_url": "https://pypi.org/project/inceptor/"
     },
     {
@@ -222,7 +223,9 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "cloneCommand": "git clone https://github.com/wronai/quality.git"
+      "pypi": "",
+      "cloneCommand": "git clone https://github.com/wronai/quality.git",
+      "installCommand": "pip install quality"
     },
     {
       "name": "shapi",
@@ -235,7 +238,7 @@
       "language": "HTML",
       "pypi": "shapi",
       "cloneCommand": "git clone https://github.com/wronai/shapi.git",
-      "installCommand": "pip install shapi",
+      "installCommand": "",
       "pypi_url": "https://pypi.org/project/shapi/"
     },
     {
@@ -310,7 +313,7 @@
       "description": "edge computing LLM for embedded devices such RPI",
       "url": "https://github.com/wronai/www",
       "website": "https://wronai.github.io/www/",
-      "updatedAt": "2025-06-09T17:09:40Z",
+      "updatedAt": "2025-06-09T17:14:41Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",

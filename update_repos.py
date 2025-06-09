@@ -7,9 +7,13 @@ import json
 import os
 import subprocess
 import sys
+import os
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Any
+
+# Add the repo-analyzer directory to the Python path
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'repo-analyzer'))
 
 # Configuration
 REPOS_JSON_PATH = Path(__file__).parent / 'repos.json'
@@ -92,22 +96,24 @@ def get_github_repos() -> List[Dict[str, Any]]:
                 if 'pypi_url' in existing_repo:
                     repo['pypi_url'] = existing_repo['pypi_url']
             
-            # Special cases for repositories
-            pypi_packages = {
-                'gollm': 'gollm',
-                'spyq': 'spyq',
-                'quality': 'wronai-quality',
-                'domd': 'domd',
-                'ellma': 'ellma',
-                'inceptor': 'inceptor',
-                'mdiss': 'mdiss',
-                'shapi': 'shapi',
-                'taskguard': 'taskguard',
-                'airun': 'airun'
-            }
-            
-            # Check if this is a known PyPI package
-            pypi_name = pypi_packages.get(name)
+            # Check if this is a Python package by analyzing the repository
+            try:
+                from repo_analyzer.analyze_repo import RepoAnalyzer
+                
+                # Initialize the analyzer
+                analyzer = RepoAnalyzer()
+                
+                # Analyze the repository
+                metadata = analyzer.analyze_repository(repo['url'])
+                
+                # If it's a Python package on PyPI, get the package name
+                if metadata.get('on_pypi') and metadata.get('package_name'):
+                    pypi_name = metadata['package_name']
+                else:
+                    pypi_name = None
+            except Exception as e:
+                print(f"Error analyzing repository {name}: {e}")
+                pypi_name = None
             if pypi_name:
                 # Verify the package exists on PyPI
                 if check_pypi_package(pypi_name):

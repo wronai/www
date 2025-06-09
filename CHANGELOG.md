@@ -3,6 +3,18 @@
 ## [v2025.06.09] - 2025-06-09
 
 ### Changed
+- Updated `quality`: pypi: 'None' → ''
+
+## [v2025.06.09] - 2025-06-09
+
+### Changed
+- Updated `git2wp`: pypi: '' → 'git2wp'
+
+## [v2025.06.09] - 2025-06-09
+
+## [v2025.06.09] - 2025-06-09
+
+### Changed
 - Updated `quality`: pypi: '' → 'None'
 
 ## [v2025.06.09] - 2025-06-09

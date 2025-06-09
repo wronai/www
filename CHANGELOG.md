@@ -2,6 +2,12 @@
 
 ## [v2025.06.09] - 2025-06-09
 
+### Changed
+- Updated `quality`: pypi: '' → 'wronai-quality'
+- Updated `spyq`: pypi: '' → 'spyq'
+
+## [v2025.06.09] - 2025-06-09
+
 ## [v2025.06.09] - 2025-06-09
 
 ### Added

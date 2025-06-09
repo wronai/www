@@ -2,6 +2,47 @@
 
 ## [v2025.06.09] - 2025-06-09
 
+### Changed
+- Updated `2025-06`: pypi: 'None' → ''
+- Updated `airun`: pypi: 'None' → 'airun'
+- Updated `allama`: pypi: '' → 'allama'
+- Updated `assistant`: pypi: '' → 'None'
+- Updated `docker-platform`: pypi: '' → 'None'
+- Updated `docs`: pypi: '' → 'None'
+- Updated `domd`: pypi: 'None' → 'domd'
+- Updated `ellma`: pypi: 'None' → 'ellma'
+- Updated `ellmo`: pypi: '' → 'None'
+- Updated `git2wp`: pypi: 'git2wp' → 'None'
+- Updated `gollm`: pypi: 'None' → 'gollm'
+- Updated `llm`: pypi: '' → 'None'
+- Updated `llm-demo`: pypi: 'None' → 'wronai'
+- Updated `mdiss`: pypi: 'None' → 'mdiss'
+- Updated `ollama`: pypi: '' → 'None'
+- Updated `quality`: pypi: '' → 'None'
+- Updated `shellguard`: pypi: '' → 'None'
+- Updated `sifu`: pypi: '' → 'None'
+- Updated `spyq`: pypi: 'spyq' → 'None'
+- Updated `taskguard`: pypi: 'None' → 'taskguard'
+- Updated `weekly`: pypi: '' → 'None'
+- Updated `www`: pypi: '' → 'None'
+
+## [v2025.06.09] - 2025-06-09
+
+### Changed
+- Updated `airun`: pypi: 'airun' → 'None'
+- Updated `domd`: pypi: 'domd' → 'None'
+- Updated `ellma`: pypi: 'ellma' → 'None'
+- Updated `gollm`: pypi: 'gollm' → 'None'
+- Updated `llm-demo`: pypi: 'wronai' → 'None'
+- Updated `mdiss`: pypi: 'mdiss' → 'None'
+- Updated `taskguard`: pypi: 'taskguard' → 'None'
+
+## [v2025.06.09] - 2025-06-09
+
+## [v2025.06.09] - 2025-06-09
+
+## [v2025.06.09] - 2025-06-09
+
 ## [v2025.06.09] - 2025-06-09
 
 ### Changed

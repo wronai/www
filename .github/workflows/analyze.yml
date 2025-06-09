@@ -68,15 +68,15 @@ jobs:
           ls -la data/
           
           # Check if analysis produced new data
-          if [ -f "data/repos_updated.json" ]; then
+          if [ -f "data/repos.json" ]; then
             # Compare with existing repos.json
-            if [ -f "repos.json" ] && cmp -s "data/repos_updated.json" "repos.json"; then
+            if [ -f "repos.json" ] && cmp -s "data/repos.json" "repos.json"; then
               echo "No changes detected in repository data"
               exit 0
             fi
             
             # Update repos.json with analyzed data
-            cp data/repos_updated.json repos.json
+            cp data/repos.json repos.json
             
             # Configure git
             git config --global user.name 'GitHub Actions Bot'
@@ -94,6 +94,6 @@ jobs:
               echo "No changes to commit"
             fi
           else
-            echo "Error: repos_updated.json not found"
+            echo "Error: repos.json not found"
             exit 1
           fi

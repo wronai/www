@@ -29,7 +29,7 @@ if (fs.existsSync(REPO_DATA_FILE)) {
   // Copy to both root and data directory for backward compatibility
   fs.ensureDirSync(path.join(DIST_DIR, 'data'));
   fs.copyFileSync(REPO_DATA_FILE, path.join(DIST_DIR, 'repos.json'));
-  fs.copyFileSync(REPO_DATA_FILE, path.join(DIST_DIR, 'data', 'repos_updated.json'));
+  fs.copyFileSync(REPO_DATA_FILE, path.join(DIST_DIR, 'data', 'repos.json'));
   
   // Verify the JSON is valid
   try {

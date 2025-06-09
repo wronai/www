@@ -51,13 +51,13 @@ async function loadRepos() {
     const possiblePaths = [
         // Production paths (GitHub Pages)
         `${window.location.origin}${BASE_URL}/repos.json`,
-        `${window.location.origin}${BASE_URL}/data/repos_updated.json`,
+        `${window.location.origin}${BASE_URL}/data/repos.json`,
         // Fallback paths (for local development)
         `${window.location.origin}/repos.json`,
-        `${window.location.origin}/data/repos_updated.json`,
+        `${window.location.origin}/data/repos.json`,
         // Relative paths (as last resort)
         'repos.json',
-        'data/repos_updated.json'
+        'data/repos.json'
     ];
 
     let lastError = null;

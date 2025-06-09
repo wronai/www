@@ -9,6 +9,7 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
+      "pypi": "",
       "cloneCommand": "git clone https://github.com/wronai/2025-06.git"
     },
     {
@@ -34,9 +35,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "pypi": "",
+      "pypi": "allama",
       "cloneCommand": "git clone https://github.com/wronai/allama.git",
-      "installCommand": "pip install allama"
+      "installCommand": "pip install allama",
+      "pypi_url": "https://pypi.org/project/allama/"
     },
     {
       "name": "assistant",
@@ -47,9 +49,7 @@
       "isArchived": false,
       "isFork": false,
       "language": "Other",
-      "pypi": "",
-      "cloneCommand": "git clone https://github.com/wronai/assistant.git",
-      "installCommand": ""
+      "cloneCommand": "git clone https://github.com/wronai/assistant.git"
     },
     {
       "name": "docker-platform",
@@ -60,9 +60,7 @@
       "isArchived": false,
       "isFork": false,
       "language": "Go",
-      "pypi": "",
-      "cloneCommand": "git clone https://github.com/wronai/docker-platform.git",
-      "installCommand": ""
+      "cloneCommand": "git clone https://github.com/wronai/docker-platform.git"
     },
     {
       "name": "docs",
@@ -73,9 +71,7 @@
       "isArchived": false,
       "isFork": false,
       "language": "Other",
-      "pypi": "",
-      "cloneCommand": "git clone https://github.com/wronai/docs.git",
-      "installCommand": ""
+      "cloneCommand": "git clone https://github.com/wronai/docs.git"
     },
     {
       "name": "domd",
@@ -157,7 +153,7 @@
       "language": "HTML",
       "pypi": "inceptor",
       "cloneCommand": "git clone https://github.com/wronai/inceptor.git",
-      "installCommand": "",
+      "installCommand": "pip install inceptor",
       "pypi_url": "https://pypi.org/project/inceptor/"
     },
     {
@@ -169,9 +165,7 @@
       "isArchived": false,
       "isFork": false,
       "language": "Other",
-      "pypi": "",
-      "cloneCommand": "git clone https://github.com/wronai/llm.git",
-      "installCommand": ""
+      "cloneCommand": "git clone https://github.com/wronai/llm.git"
     },
     {
       "name": "llm-demo",
@@ -210,9 +204,7 @@
       "isArchived": false,
       "isFork": false,
       "language": "Shell",
-      "pypi": "",
-      "cloneCommand": "git clone https://github.com/wronai/ollama.git",
-      "installCommand": ""
+      "cloneCommand": "git clone https://github.com/wronai/ollama.git"
     },
     {
       "name": "quality",
@@ -223,9 +215,7 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "pypi": "",
-      "cloneCommand": "git clone https://github.com/wronai/quality.git",
-      "installCommand": "pip install quality"
+      "cloneCommand": "git clone https://github.com/wronai/quality.git"
     },
     {
       "name": "shapi",
@@ -238,7 +228,7 @@
       "language": "HTML",
       "pypi": "shapi",
       "cloneCommand": "git clone https://github.com/wronai/shapi.git",
-      "installCommand": "",
+      "installCommand": "pip install shapi",
       "pypi_url": "https://pypi.org/project/shapi/"
     },
     {
@@ -313,13 +303,11 @@
       "description": "edge computing LLM for embedded devices such RPI",
       "url": "https://github.com/wronai/www",
       "website": "https://wronai.github.io/www/",
-      "updatedAt": "2025-06-09T17:21:17Z",
+      "updatedAt": "2025-06-09T17:24:42Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "pypi": "",
-      "cloneCommand": "git clone https://github.com/wronai/www.git",
-      "installCommand": "pip install www"
+      "cloneCommand": "git clone https://github.com/wronai/www.git"
     }
   ]
 }

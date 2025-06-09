@@ -49,9 +49,9 @@ fi
 mkdir -p "${OUTPUT_DIR}" "${BACKUP_DIR}"
 
 # Backup existing data if it exists
-if [ -f "${OUTPUT_DIR}/repos_updated.json" ]; then
+if [ -f "${OUTPUT_DIR}/repos.json" ]; then
     info "Backing up existing repository data..."
-    cp "${OUTPUT_DIR}/repos_updated.json" "${BACKUP_DIR}/repos_${TIMESTAMP}.json"
+    cp "${OUTPUT_DIR}/repos.json" "${BACKUP_DIR}/repos_${TIMESTAMP}.json"
 fi
 
 # Build the Docker image

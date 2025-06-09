@@ -157,7 +157,7 @@
       "language": "HTML",
       "pypi": "inceptor",
       "cloneCommand": "git clone https://github.com/wronai/inceptor.git",
-      "installCommand": "",
+      "installCommand": "pip install inceptor",
       "pypi_url": "https://pypi.org/project/inceptor/"
     },
     {
@@ -184,7 +184,7 @@
       "language": "Python",
       "pypi": "wronai",
       "cloneCommand": "git clone https://github.com/wronai/llm-demo.git",
-      "installCommand": "pip install llm-demo",
+      "installCommand": "pip install wronai",
       "pypi_url": "https://pypi.org/project/wronai/"
     },
     {
@@ -238,7 +238,7 @@
       "language": "HTML",
       "pypi": "shapi",
       "cloneCommand": "git clone https://github.com/wronai/shapi.git",
-      "installCommand": "",
+      "installCommand": "pip install shapi",
       "pypi_url": "https://pypi.org/project/shapi/"
     },
     {

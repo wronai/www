@@ -31,7 +31,7 @@ dist/
 # Repository Analysis
 data/
 repo_analysis/
-repos_updated.json
+repos.json
 *.bak_*
 
 # Editor and IDE

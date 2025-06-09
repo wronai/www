@@ -124,20 +124,27 @@ def get_github_repos() -> List[Dict[str, Any]]:
             except Exception as e:
                 print(f"Error analyzing repository {name}: {e}")
                 pypi_name = None
-            if pypi_name:
-                # Verify the package exists on PyPI
-                if check_pypi_package(pypi_name):
-                    repo['pypi'] = pypi_name
-                    repo['pypi_url'] = f'https://pypi.org/project/{pypi_name}/'
-                    # Set install command for PyPI packages
-                    repo['installCommand'] = f'pip install {pypi_name}'
-                else:
-                    _cleanup_pypi_info(repo)
-                    # Remove install command if package is not on PyPI
-                    if 'installCommand' in repo:
-                        del repo['installCommand']
+            # Special case for allama package
+            if name == 'allama':
+                repo['pypi'] = 'allama'
+                repo['pypi_url'] = 'https://pypi.org/project/allama/'
+                repo['installCommand'] = 'pip install allama'
+            # Special case for 2025-06 (documentation/planning repo, not a Python package)
             elif name == '2025-06':
-                # This is a documentation/planning repo, not a Python package
+                if 'installCommand' in repo:
+                    del repo['installCommand']
+            # For other packages
+            elif pypi_name and check_pypi_package(pypi_name):
+                # Ensure both pypi and pypi_url are set for PyPI packages
+                repo['pypi'] = pypi_name
+                repo['pypi_url'] = f'https://pypi.org/project/{pypi_name}/'
+                
+                # If installCommand is not set, set it to the standard pip install command
+                if 'installCommand' not in repo or not repo['installCommand']:
+                    repo['installCommand'] = f'pip install {pypi_name}'
+            else:
+                _cleanup_pypi_info(repo)
+                # Remove install command if package is not on PyPI
                 if 'installCommand' in repo:
                     del repo['installCommand']
                 if 'pypi' in repo:

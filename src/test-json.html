@@ -20,7 +20,7 @@
     </div>
     
     <div id="test2">
-        <h2>Test 2: Load from data directory (/data/repos_updated.json)</h2>
+        <h2>Test 2: Load from data directory (/data/repos.json)</h2>
         <pre id="test2-result">Testing...</pre>
     </div>
     
@@ -51,7 +51,7 @@
             });
 
         // Test 2: Load from data directory
-        fetch('/data/repos_updated.json')
+        fetch('/data/repos.json')
             .then(response => response.json())
             .then(data => {
                 document.getElementById('test2-result').innerHTML = 

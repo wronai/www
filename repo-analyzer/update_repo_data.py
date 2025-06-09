@@ -71,7 +71,7 @@ def main():
     script_dir = Path(__file__).parent
     data_dir = script_dir.parent
     original_path = data_dir / 'repos.json'
-    analyzed_path = data_dir / 'repos_updated.json'
+    analyzed_path = data_dir / 'repos.json'
     
     # Check if files exist
     if not original_path.exists():

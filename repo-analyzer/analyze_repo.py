@@ -370,7 +370,7 @@ def main():
     # Save updated repositories
     output_data = {'repositories': updated_repos}
     output_dir = os.path.dirname(os.path.abspath(__file__))
-    output_path = os.path.join(output_dir, 'repos_updated.json')
+    output_path = os.path.join(output_dir, 'repos.json')
     
     with open(output_path, 'w') as f:
         json.dump(output_data, f, indent=2)

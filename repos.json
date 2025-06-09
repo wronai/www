@@ -9,9 +9,7 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "pypi": "",
-      "cloneCommand": "git clone https://github.com/wronai/2025-06.git",
-      "installCommand": "pip install 2025-06"
+      "cloneCommand": "git clone https://github.com/wronai/2025-06.git"
     },
     {
       "name": "airun",
@@ -22,9 +20,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "pypi": "",
+      "pypi": "airun",
       "cloneCommand": "git clone https://github.com/wronai/airun.git",
-      "installCommand": "pip install airun"
+      "installCommand": "pip install airun",
+      "pypi_url": "https://pypi.org/project/airun/"
     },
     {
       "name": "allama",
@@ -83,13 +82,14 @@
       "description": "To-DoMD automatically detects and tests project commands from various configuration files, then generates a detailed TODO.md file for failed commands with error reports and suggested fixes.",
       "url": "https://github.com/wronai/domd",
       "website": "https://wronai.github.io/domd/",
-      "updatedAt": "2025-06-09T16:38:41Z",
+      "updatedAt": "2025-06-09T17:04:16Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "pypi": "",
+      "pypi": "domd",
       "cloneCommand": "git clone https://github.com/wronai/domd.git",
-      "installCommand": "pip install domd"
+      "installCommand": "pip install domd",
+      "pypi_url": "https://pypi.org/project/domd/"
     },
     {
       "name": "ellma",
@@ -100,9 +100,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "pypi": "",
+      "pypi": "ellma",
       "cloneCommand": "git clone https://github.com/wronai/ellma.git",
-      "installCommand": "pip install ellma"
+      "installCommand": "pip install ellma",
+      "pypi_url": "https://pypi.org/project/ellma/"
     },
     {
       "name": "ellmo",
@@ -135,7 +136,7 @@
       "description": "goLLM - Go Learn, Lead, Master!  \ud83d\ude80 Intelligent Python code quality guardian with LLM integration, automated TODO management and CHANGELOG generation.",
       "url": "https://github.com/wronai/gollm",
       "website": "https://wronai.github.io/gollm/",
-      "updatedAt": "2025-06-04T16:45:30Z",
+      "updatedAt": "2025-06-09T17:04:47Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",
@@ -153,9 +154,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "HTML",
-      "pypi": "",
+      "pypi": "inceptor",
       "cloneCommand": "git clone https://github.com/wronai/inceptor.git",
-      "installCommand": ""
+      "installCommand": "",
+      "pypi_url": "https://pypi.org/project/inceptor/"
     },
     {
       "name": "llm",
@@ -179,9 +181,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "pypi": "",
+      "pypi": "wronai",
       "cloneCommand": "git clone https://github.com/wronai/llm-demo.git",
-      "installCommand": "pip install llm-demo"
+      "installCommand": "pip install llm-demo",
+      "pypi_url": "https://pypi.org/project/wronai/"
     },
     {
       "name": "mdiss",
@@ -192,9 +195,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "pypi": "",
+      "pypi": "mdiss",
       "cloneCommand": "git clone https://github.com/wronai/mdiss.git",
-      "installCommand": "pip install mdiss"
+      "installCommand": "pip install mdiss",
+      "pypi_url": "https://pypi.org/project/mdiss/"
     },
     {
       "name": "ollama",
@@ -218,10 +222,8 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "pypi": "wronai-quality",
       "cloneCommand": "git clone https://github.com/wronai/quality.git",
-      "installCommand": "pip install quality",
-      "pypi_url": "https://pypi.org/project/wronai-quality/"
+      "installCommand": "pip install quality"
     },
     {
       "name": "shapi",
@@ -232,9 +234,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "HTML",
-      "pypi": "",
+      "pypi": "shapi",
       "cloneCommand": "git clone https://github.com/wronai/shapi.git",
-      "installCommand": ""
+      "installCommand": "",
+      "pypi_url": "https://pypi.org/project/shapi/"
     },
     {
       "name": "shellguard",
@@ -281,13 +284,14 @@
       "description": "TaskGuard - LLM Task Controller - AI-powered development assistant that controls LLM behavior, enforces best practices, and maintains laser focus through intelligent automation.",
       "url": "https://github.com/wronai/taskguard",
       "website": "https://wronai.github.io/taskguard/",
-      "updatedAt": "2025-06-06T16:31:21Z",
+      "updatedAt": "2025-06-09T17:04:15Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "pypi": "",
+      "pypi": "taskguard",
       "cloneCommand": "git clone https://github.com/wronai/taskguard.git",
-      "installCommand": "pip install taskguard"
+      "installCommand": "pip install taskguard",
+      "pypi_url": "https://pypi.org/project/taskguard/"
     },
     {
       "name": "weekly",
@@ -307,7 +311,7 @@
       "description": "edge computing LLM for embedded devices such RPI",
       "url": "https://github.com/wronai/www",
       "website": "https://wronai.github.io/www/",
-      "updatedAt": "2025-06-09T16:46:13Z",
+      "updatedAt": "2025-06-09T16:54:02Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",

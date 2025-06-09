@@ -64,16 +64,53 @@ def get_github_repos() -> List[Dict[str, Any]]:
                 if 'pypi_url' in existing_repo:
                     repo['pypi_url'] = existing_repo['pypi_url']
             
-            # Special cases for PyPI packages
-            if name == 'gollm':
-                repo['pypi'] = 'gollm'
-                repo['pypi_url'] = 'https://pypi.org/project/gollm/'
-            elif name == 'spyq':
-                repo['pypi'] = 'spyq'
-                repo['pypi_url'] = 'https://pypi.org/project/spyq/'
-            elif name == 'quality':
-                repo['pypi'] = 'wronai-quality'
-                repo['pypi_url'] = 'https://pypi.org/project/wronai-quality/'
+            # Special cases for repositories
+            pypi_packages = {
+                'gollm': 'gollm',
+                'spyq': 'spyq',
+                'quality': 'wronai-quality',
+                'domd': 'domd',
+                'ellma': 'ellma',
+                'inceptor': 'inceptor',
+                'mdiss': 'mdiss',
+                'shapi': 'shapi',
+                'taskguard': 'taskguard',
+                'airun': 'airun'
+            }
+            
+            # Check if this is a known PyPI package
+            pypi_name = pypi_packages.get(name)
+            if pypi_name:
+                # Verify the package exists on PyPI
+                try:
+                    import requests
+                    response = requests.get(f'https://pypi.org/pypi/{pypi_name}/json', timeout=5)
+                    if response.status_code == 200:
+                        repo['pypi'] = pypi_name
+                        repo['pypi_url'] = f'https://pypi.org/project/{pypi_name}/'
+                    else:
+                        # Package not found on PyPI, remove any existing PyPI info
+                        if 'pypi' in repo:
+                            del repo['pypi']
+                        if 'pypi_url' in repo:
+                            del repo['pypi_url']
+                except Exception as e:
+                    print(f"Error checking PyPI for {pypi_name}: {e}")
+            elif name == '2025-06':
+                # This is a documentation/planning repo, not a Python package
+                if 'installCommand' in repo:
+                    del repo['installCommand']
+                if 'pypi' in repo:
+                    del repo['pypi']
+                if 'pypi_url' in repo:
+                    del repo['pypi_url']
+                    
+            # Ensure all Python repos without PyPI info have their PyPI fields cleaned up
+            if repo.get('language', '').lower() == 'python' and not repo.get('pypi'):
+                if 'pypi_url' in repo:
+                    del repo['pypi_url']
+            elif repo.get('language', '').lower() == 'python' and repo.get('pypi') and not repo.get('pypi_url'):
+                repo['pypi_url'] = f"https://pypi.org/project/{repo['pypi']}/"
                 
             repos.append(repo)
             

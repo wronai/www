@@ -22,7 +22,7 @@ import toml
 
 # Configuration
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
-REPOS_JSON_PATH = '/data/repos.json'  # Will be mounted from host
+REPOS_JSON_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'repos.json')
 TEMP_DIR = '/tmp/repo_analysis'
 
 class RepoAnalyzer:
@@ -246,6 +246,16 @@ class RepoAnalyzer:
         """Analyze a single repository and return its metadata."""
         print(f"\nAnalyzing {repo_url}...")
         
+        # Extract owner and repo name from URL
+        if 'github.com' in repo_url:
+            path = repo_url.split('github.com/')[-1].rstrip('/')
+            if path.endswith('.git'):
+                path = path[:-4]
+            owner, repo_name = path.split('/')[:2]
+        else:
+            print(f"Unsupported repository URL: {repo_url}")
+            return {}
+        
         # Create a temporary directory for the repository
         with tempfile.TemporaryDirectory(prefix='repo_') as temp_dir:
             # Clone the repository
@@ -257,9 +267,21 @@ class RepoAnalyzer:
             # Detect package manager and extract metadata
             metadata = self.detect_package_manager(repo_path)
             
-            # Check if the package is on PyPI (for Python packages)
+            # For Python repositories, check if the package is on PyPI
             if metadata['package_manager'] in ['pip', 'poetry'] and metadata['package_name']:
-                metadata['on_pypi'] = self.check_pypi_package(metadata['package_name'])
+                # First try with the detected package name
+                pkg_name = metadata['package_name']
+                metadata['on_pypi'] = self.check_pypi_package(pkg_name)
+                if metadata['on_pypi']:
+                    metadata['pypi'] = pkg_name
+                    metadata['pypi_url'] = f"https://pypi.org/project/{pkg_name}/"
+                else:
+                    # If not found, try with the repository name
+                    pkg_name = repo_name.lower().replace('_', '-').replace('.', '-')
+                    if self.check_pypi_package(pkg_name):
+                        metadata['on_pypi'] = True
+                        metadata['pypi'] = pkg_name
+                        metadata['pypi_url'] = f"https://pypi.org/project/{pkg_name}/"
             else:
                 metadata['on_pypi'] = False
             
@@ -347,13 +369,14 @@ def main():
     
     # Save updated repositories
     output_data = {'repositories': updated_repos}
-    output_path = os.path.join(os.path.dirname(REPOS_JSON_PATH), 'repos_updated.json')
+    output_dir = os.path.dirname(os.path.abspath(__file__))
+    output_path = os.path.join(output_dir, 'repos_updated.json')
     
     with open(output_path, 'w') as f:
         json.dump(output_data, f, indent=2)
     
     print(f"\nAnalysis complete. Updated repository data saved to {output_path}")
-    print(f"You should review the changes and then replace {REPOS_JSON_PATH} with the updated file.")
+    print("You should review the changes and then update the main repos.json file.")
 
 if __name__ == "__main__":
     main()

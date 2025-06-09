@@ -3,6 +3,11 @@
 ## [v2025.06.09] - 2025-06-09
 
 ### Changed
+- Updated `quality`: pypi: '' → 'None'
+
+## [v2025.06.09] - 2025-06-09
+
+### Changed
 - Updated `quality`: pypi: 'None' → ''
 
 ## [v2025.06.09] - 2025-06-09

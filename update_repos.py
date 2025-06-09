@@ -113,8 +113,13 @@ def get_github_repos() -> List[Dict[str, Any]]:
                 if check_pypi_package(pypi_name):
                     repo['pypi'] = pypi_name
                     repo['pypi_url'] = f'https://pypi.org/project/{pypi_name}/'
+                    # Set install command for PyPI packages
+                    repo['installCommand'] = f'pip install {pypi_name}'
                 else:
                     _cleanup_pypi_info(repo)
+                    # Remove install command if package is not on PyPI
+                    if 'installCommand' in repo:
+                        del repo['installCommand']
             elif name == '2025-06':
                 # This is a documentation/planning repo, not a Python package
                 if 'installCommand' in repo:

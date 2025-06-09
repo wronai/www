@@ -6,6 +6,7 @@ Script to update repos.json and CHANGELOG.md with the latest repository informat
 import json
 import os
 import subprocess
+import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Any
@@ -14,6 +15,33 @@ from typing import Dict, List, Optional, Tuple, Any
 REPOS_JSON_PATH = Path(__file__).parent / 'repos.json'
 CHANGELOG_PATH = Path(__file__).parent / 'CHANGELOG.md'
 GITHUB_ORG = 'wronai'
+
+def _cleanup_pypi_info(repo):
+    """Helper method to clean up PyPI information from a repo"""
+    if 'pypi' in repo:
+        del repo['pypi']
+    if 'pypi_url' in repo:
+        del repo['pypi_url']
+
+def check_pypi_package(package_name):
+    """Check if a package exists on PyPI using curl"""
+    try:
+        result = subprocess.run(
+            ['curl', '-s', f'https://pypi.org/pypi/{package_name}/json'],
+            capture_output=True,
+            text=True
+        )
+        
+        if result.returncode == 0:
+            try:
+                data = json.loads(result.stdout)
+                return 'info' in data and 'name' in data['info']
+            except json.JSONDecodeError:
+                return False
+        return False
+    except Exception as e:
+        print(f"Error checking PyPI for {package_name}: {e}")
+        return False
 
 def get_github_repos() -> List[Dict[str, Any]]:
     """Fetch repository information from GitHub API."""
@@ -82,20 +110,11 @@ def get_github_repos() -> List[Dict[str, Any]]:
             pypi_name = pypi_packages.get(name)
             if pypi_name:
                 # Verify the package exists on PyPI
-                try:
-                    import requests
-                    response = requests.get(f'https://pypi.org/pypi/{pypi_name}/json', timeout=5)
-                    if response.status_code == 200:
-                        repo['pypi'] = pypi_name
-                        repo['pypi_url'] = f'https://pypi.org/project/{pypi_name}/'
-                    else:
-                        # Package not found on PyPI, remove any existing PyPI info
-                        if 'pypi' in repo:
-                            del repo['pypi']
-                        if 'pypi_url' in repo:
-                            del repo['pypi_url']
-                except Exception as e:
-                    print(f"Error checking PyPI for {pypi_name}: {e}")
+                if check_pypi_package(pypi_name):
+                    repo['pypi'] = pypi_name
+                    repo['pypi_url'] = f'https://pypi.org/project/{pypi_name}/'
+                else:
+                    _cleanup_pypi_info(repo)
             elif name == '2025-06':
                 # This is a documentation/planning repo, not a Python package
                 if 'installCommand' in repo:

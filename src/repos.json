@@ -222,6 +222,7 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
+      "pypi": "",
       "cloneCommand": "git clone https://github.com/wronai/quality.git",
       "installCommand": "pip install quality"
     },

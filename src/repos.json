@@ -5,7 +5,7 @@
       "description": "Summaries and Plans",
       "url": "https://github.com/wronai/2025-06",
       "website": "https://wronai.github.io/2025-06/",
-      "updatedAt": "2025-06-07T14:50:51Z",
+      "updatedAt": "2025-06-07T16:01:39Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",
@@ -83,7 +83,7 @@
       "description": "To-DoMD automatically detects and tests project commands from various configuration files, then generates a detailed TODO.md file for failed commands with error reports and suggested fixes.",
       "url": "https://github.com/wronai/domd",
       "website": "https://wronai.github.io/domd/",
-      "updatedAt": "2025-06-07T13:30:36Z",
+      "updatedAt": "2025-06-09T16:38:41Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",
@@ -96,13 +96,26 @@
       "description": "Evolutionary Local LLM Agent - Self-improving AI assistant",
       "url": "https://github.com/wronai/ellma",
       "website": "https://wronai.github.io/ellma/",
-      "updatedAt": "2025-06-07T14:43:23Z",
+      "updatedAt": "2025-06-08T18:21:49Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",
       "pypi": "",
       "cloneCommand": "git clone https://github.com/wronai/ellma.git",
       "installCommand": "pip install ellma"
+    },
+    {
+      "name": "ellmo",
+      "description": "",
+      "url": "https://github.com/wronai/ellmo",
+      "website": "https://wronai.github.io/ellmo/",
+      "updatedAt": "2025-06-09T14:16:22Z",
+      "isArchived": false,
+      "isFork": false,
+      "language": "Shell",
+      "pypi": "",
+      "cloneCommand": "git clone https://github.com/wronai/ellmo.git",
+      "installCommand": ""
     },
     {
       "name": "git2wp",
@@ -170,6 +183,19 @@
       "installCommand": "pip install llm-demo"
     },
     {
+      "name": "mdiss",
+      "description": "Automatyczne generowanie ticket\u00f3w GitHub na podstawie plik\u00f3w markdown z b\u0142\u0119dami polece\u0144",
+      "url": "https://github.com/wronai/mdiss",
+      "website": "https://wronai.github.io/mdiss/",
+      "updatedAt": "2025-06-09T16:15:07Z",
+      "isArchived": false,
+      "isFork": false,
+      "language": "Python",
+      "pypi": "",
+      "cloneCommand": "git clone https://github.com/wronai/mdiss.git",
+      "installCommand": "pip install mdiss"
+    },
+    {
       "name": "ollama",
       "description": "serve ollama on embedded without pain",
       "url": "https://github.com/wronai/ollama",
@@ -196,6 +222,19 @@
       "installCommand": "pip install quality"
     },
     {
+      "name": "shapi",
+      "description": "from shell to api",
+      "url": "https://github.com/wronai/shapi",
+      "website": "https://wronai.github.io/shapi/",
+      "updatedAt": "2025-06-08T19:26:47Z",
+      "isArchived": false,
+      "isFork": false,
+      "language": "HTML",
+      "pypi": "",
+      "cloneCommand": "git clone https://github.com/wronai/shapi.git",
+      "installCommand": ""
+    },
+    {
       "name": "shellguard",
       "description": "\"Shell Guardian for Safe Development\" - \"Your shell's bodyguard\"",
       "url": "https://github.com/wronai/shellguard",
@@ -207,6 +246,19 @@
       "pypi": "",
       "cloneCommand": "git clone https://github.com/wronai/shellguard.git",
       "installCommand": ""
+    },
+    {
+      "name": "sifu",
+      "description": "Sifu is an advanced knowledge management and context-aware response system designed to enhance ELLMa's capabilities. It provides real-time learning, multi-language support, and integration with external knowledge sources.",
+      "url": "https://github.com/wronai/sifu",
+      "website": "https://wronai.github.io/sifu/",
+      "updatedAt": "2025-06-09T12:04:30Z",
+      "isArchived": false,
+      "isFork": false,
+      "language": "Python",
+      "pypi": "",
+      "cloneCommand": "git clone https://github.com/wronai/sifu.git",
+      "installCommand": "pip install sifu"
     },
     {
       "name": "spyq",
@@ -239,20 +291,20 @@
       "description": "Weekly helps developers maintain high code quality by automatically detecting issues and suggesting improvements. It analyzes various aspects of your Python projects and generates actionable reports.",
       "url": "https://github.com/wronai/weekly",
       "website": "https://wronai.github.io/weekly/",
-      "updatedAt": "2025-06-07T10:27:08Z",
+      "updatedAt": "2025-06-07T16:14:59Z",
       "isArchived": false,
       "isFork": false,
-      "language": "Other",
+      "language": "Python",
       "pypi": "",
       "cloneCommand": "git clone https://github.com/wronai/weekly.git",
-      "installCommand": ""
+      "installCommand": "pip install weekly"
     },
     {
       "name": "www",
       "description": "edge computing LLM for embedded devices such RPI",
       "url": "https://github.com/wronai/www",
       "website": "https://wronai.github.io/www/",
-      "updatedAt": "2025-06-07T09:28:50Z",
+      "updatedAt": "2025-06-07T15:05:11Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",

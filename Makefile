@@ -72,6 +72,7 @@ update-repos:  ## Update repository data
 		echo "${YELLOW}Python 3 is required to update repository data${RESET}"; \
 		exit 1; \
 	fi
+	cp update_repos.py src/update_repos.py
 	@echo "${GREEN}✓ Repository data updated${RESET}"
 
 ##@ Development Setup
@@ -107,8 +108,13 @@ test-gh-actions:  ## Test GitHub Actions locally
 	@echo "${YELLOW}Testing GitHub Actions locally...${RESET}"
 	@echo "${BLUE}Note: Docker must be installed and running${RESET}"
 	@if ! command -v act &> /dev/null; then \
-		echo "${YELLOW}act not found. Installing with npm...${RESET}"; \
-		npm install -g @nektos/act; \
+		echo "${YELLOW}act not found. Installing...${RESET}"; \
+		echo "${YELLOW}Please install act using one of these methods:${RESET}"; \
+		echo "1. Using Homebrew (Linux/macOS): brew install act"; \
+		echo "2. Using Chocolatey (Windows): choco install act-cli"; \
+		echo "3. Using Pacman (Arch Linux): sudo pacman -S act"; \
+		echo "4. From source: https://github.com/nektos/act#installation"; \
+		exit 1; \
 	fi
 	@echo "${BLUE}Running GitHub Actions locally...${RESET}"
 	@act -P ubuntu-latest=ghcr.io/catthehacker/ubuntu:act-latest

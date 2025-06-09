@@ -1,5 +1,16 @@
 # Changelog
 
+## [v2025.06.09] - 2025-06-09
+
+### Added
+- Added `ellmo`:  ([GitHub](https://github.com/wronai/ellmo))
+- Added `mdiss`: Automatyczne generowanie ticketów GitHub na podstawie plików markdown z błędami poleceń ([GitHub](https://github.com/wronai/mdiss))
+- Added `shapi`: from shell to api ([GitHub](https://github.com/wronai/shapi))
+- Added `sifu`: Sifu is an advanced knowledge management and context-aware response system designed to enhance ELLMa's capabilities. It provides real-time learning, multi-language support, and integration with external knowledge sources. ([GitHub](https://github.com/wronai/sifu))
+
+### Changed
+- Updated `weekly`: language: 'Other' → 'Python'
+
 ## [v2025.06.07] - 2025-06-07
 
 ### Added

@@ -35,7 +35,7 @@ def get_github_repos() -> List[Dict[str, Any]]:
             # Clean up description (handle None and strip whitespace)
             description = description.strip() if description else ""
             
-            # Format repository data
+            # Format repository data - preserve existing PyPI info if it exists
             repo = {
                 'name': name,
                 'description': description,
@@ -50,13 +50,30 @@ def get_github_repos() -> List[Dict[str, Any]]:
                 'installCommand': f"pip install {name}" if language.lower() == 'python' else ""
             }
             
+            # Preserve existing PyPI info if it exists in the current repos.json
+            existing_repos = {}
+            if REPOS_JSON_PATH.exists():
+                with open(REPOS_JSON_PATH, 'r') as f:
+                    data = json.load(f)
+                    existing_repos = {r['name']: r for r in data.get('repositories', [])}
+            
+            if name in existing_repos:
+                existing_repo = existing_repos[name]
+                if 'pypi' in existing_repo:
+                    repo['pypi'] = existing_repo['pypi']
+                if 'pypi_url' in existing_repo:
+                    repo['pypi_url'] = existing_repo['pypi_url']
+            
             # Special cases for PyPI packages
             if name == 'gollm':
                 repo['pypi'] = 'gollm'
+                repo['pypi_url'] = 'https://pypi.org/project/gollm/'
             elif name == 'spyq':
                 repo['pypi'] = 'spyq'
+                repo['pypi_url'] = 'https://pypi.org/project/spyq/'
             elif name == 'quality':
                 repo['pypi'] = 'wronai-quality'
+                repo['pypi_url'] = 'https://pypi.org/project/wronai-quality/'
                 
             repos.append(repo)
             

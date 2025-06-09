@@ -2,6 +2,8 @@
 
 ## [v2025.06.09] - 2025-06-09
 
+## [v2025.06.09] - 2025-06-09
+
 ### Added
 - Added `ellmo`:  ([GitHub](https://github.com/wronai/ellmo))
 - Added `mdiss`: Automatyczne generowanie ticketów GitHub na podstawie plików markdown z błędami poleceń ([GitHub](https://github.com/wronai/mdiss))

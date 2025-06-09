@@ -141,7 +141,8 @@
       "language": "Python",
       "pypi": "gollm",
       "cloneCommand": "git clone https://github.com/wronai/gollm.git",
-      "installCommand": "pip install gollm"
+      "installCommand": "pip install gollm",
+      "pypi_url": "https://pypi.org/project/gollm/"
     },
     {
       "name": "inceptor",
@@ -219,7 +220,8 @@
       "language": "Python",
       "pypi": "wronai-quality",
       "cloneCommand": "git clone https://github.com/wronai/quality.git",
-      "installCommand": "pip install quality"
+      "installCommand": "pip install quality",
+      "pypi_url": "https://pypi.org/project/wronai-quality/"
     },
     {
       "name": "shapi",
@@ -271,7 +273,8 @@
       "language": "Python",
       "pypi": "spyq",
       "cloneCommand": "git clone https://github.com/wronai/spyq.git",
-      "installCommand": "pip install spyq"
+      "installCommand": "pip install spyq",
+      "pypi_url": "https://pypi.org/project/spyq/"
     },
     {
       "name": "taskguard",
@@ -304,7 +307,7 @@
       "description": "edge computing LLM for embedded devices such RPI",
       "url": "https://github.com/wronai/www",
       "website": "https://wronai.github.io/www/",
-      "updatedAt": "2025-06-07T15:05:11Z",
+      "updatedAt": "2025-06-09T16:46:13Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",

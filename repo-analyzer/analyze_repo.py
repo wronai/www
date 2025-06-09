@@ -291,8 +291,11 @@ def update_repos_with_metadata(repos: List[Dict], metadata_list: List[Dict]) -> 
             updated_repo['package_manager'] = repo_metadata['package_manager']
         
         # Update package info if available
-        if 'package_name' in repo_metadata and repo_metadata['package_name']:
-            updated_repo['pypi'] = repo_metadata['package_name'] if repo_metadata.get('on_pypi') else ''
+        if 'package_name' in repo_metadata and repo_metadata['package_name'] and repo_metadata.get('on_pypi'):
+            updated_repo['pypi'] = repo_metadata['package_name']
+            updated_repo['pypi_url'] = f"https://pypi.org/project/{repo_metadata['package_name']}/"
+        else:
+            updated_repo['pypi'] = ''
         
         # Add other metadata
         for field in ['has_dockerfile', 'has_docker_compose', 'has_github_actions']:

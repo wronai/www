@@ -72,7 +72,7 @@ update-repos:  ## Update repository data
 		echo "${YELLOW}Python 3 is required to update repository data${RESET}"; \
 		exit 1; \
 	fi
-	cp update_repos.py src/update_repos.py
+	cp repos.json src/repos.json
 	@echo "${GREEN}✓ Repository data updated${RESET}"
 
 ##@ Development Setup

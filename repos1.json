@@ -21,7 +21,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "cloneCommand": "git clone https://github.com/wronai/airun.git"
+      "pypi": "airun",
+      "cloneCommand": "git clone https://github.com/wronai/airun.git",
+      "installCommand": "pip install airun",
+      "pypi_url": "https://pypi.org/project/airun/"
     },
     {
       "name": "allama",
@@ -79,7 +82,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "cloneCommand": "git clone https://github.com/wronai/domd.git"
+      "pypi": "domd",
+      "cloneCommand": "git clone https://github.com/wronai/domd.git",
+      "installCommand": "pip install domd",
+      "pypi_url": "https://pypi.org/project/domd/"
     },
     {
       "name": "ellma",
@@ -90,7 +96,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "cloneCommand": "git clone https://github.com/wronai/ellma.git"
+      "pypi": "ellma",
+      "cloneCommand": "git clone https://github.com/wronai/ellma.git",
+      "installCommand": "pip install ellma",
+      "pypi_url": "https://pypi.org/project/ellma/"
     },
     {
       "name": "ellmo",
@@ -101,18 +110,9 @@
       "isArchived": false,
       "isFork": false,
       "language": "Shell",
-      "cloneCommand": "git clone https://github.com/wronai/ellmo.git"
-    },
-    {
-      "name": "formagent",
-      "description": "",
-      "url": "https://github.com/wronai/formagent",
-      "website": "https://wronai.github.io/formagent/",
-      "updatedAt": "2025-06-09T22:27:18Z",
-      "isArchived": false,
-      "isFork": false,
-      "language": "JavaScript",
-      "cloneCommand": "git clone https://github.com/wronai/formagent.git"
+      "pypi": "",
+      "cloneCommand": "git clone https://github.com/wronai/ellmo.git",
+      "installCommand": ""
     },
     {
       "name": "git2wp",
@@ -123,7 +123,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "JavaScript",
-      "cloneCommand": "git clone https://github.com/wronai/git2wp.git"
+      "pypi": "git2wp",
+      "cloneCommand": "git clone https://github.com/wronai/git2wp.git",
+      "installCommand": "",
+      "pypi_url": "https://pypi.org/project/git2wp/"
     },
     {
       "name": "gollm",
@@ -134,7 +137,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "cloneCommand": "git clone https://github.com/wronai/gollm.git"
+      "pypi": "gollm",
+      "cloneCommand": "git clone https://github.com/wronai/gollm.git",
+      "installCommand": "pip install gollm",
+      "pypi_url": "https://pypi.org/project/gollm/"
     },
     {
       "name": "inceptor",
@@ -145,7 +151,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "HTML",
-      "cloneCommand": "git clone https://github.com/wronai/inceptor.git"
+      "pypi": "inceptor",
+      "cloneCommand": "git clone https://github.com/wronai/inceptor.git",
+      "installCommand": "pip install inceptor",
+      "pypi_url": "https://pypi.org/project/inceptor/"
     },
     {
       "name": "llm",
@@ -167,18 +176,24 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "cloneCommand": "git clone https://github.com/wronai/llm-demo.git"
+      "pypi": "wronai",
+      "cloneCommand": "git clone https://github.com/wronai/llm-demo.git",
+      "installCommand": "pip install llm-demo",
+      "pypi_url": "https://pypi.org/project/wronai/"
     },
     {
       "name": "mdiss",
       "description": "Automatyczne generowanie ticket\u00f3w GitHub na podstawie plik\u00f3w markdown z b\u0142\u0119dami polece\u0144",
       "url": "https://github.com/wronai/mdiss",
       "website": "https://wronai.github.io/mdiss/",
-      "updatedAt": "2025-06-09T20:00:32Z",
+      "updatedAt": "2025-06-09T16:15:07Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "cloneCommand": "git clone https://github.com/wronai/mdiss.git"
+      "pypi": "mdiss",
+      "cloneCommand": "git clone https://github.com/wronai/mdiss.git",
+      "installCommand": "pip install mdiss",
+      "pypi_url": "https://pypi.org/project/mdiss/"
     },
     {
       "name": "ollama",
@@ -211,7 +226,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "HTML",
-      "cloneCommand": "git clone https://github.com/wronai/shapi.git"
+      "pypi": "shapi",
+      "cloneCommand": "git clone https://github.com/wronai/shapi.git",
+      "installCommand": "pip install shapi",
+      "pypi_url": "https://pypi.org/project/shapi/"
     },
     {
       "name": "shellguard",
@@ -222,7 +240,9 @@
       "isArchived": false,
       "isFork": false,
       "language": "Shell",
-      "cloneCommand": "git clone https://github.com/wronai/shellguard.git"
+      "pypi": "",
+      "cloneCommand": "git clone https://github.com/wronai/shellguard.git",
+      "installCommand": ""
     },
     {
       "name": "sifu",
@@ -233,7 +253,9 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "cloneCommand": "git clone https://github.com/wronai/sifu.git"
+      "pypi": "",
+      "cloneCommand": "git clone https://github.com/wronai/sifu.git",
+      "installCommand": "pip install sifu"
     },
     {
       "name": "spyq",
@@ -244,7 +266,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "cloneCommand": "git clone https://github.com/wronai/spyq.git"
+      "pypi": "spyq",
+      "cloneCommand": "git clone https://github.com/wronai/spyq.git",
+      "installCommand": "pip install spyq",
+      "pypi_url": "https://pypi.org/project/spyq/"
     },
     {
       "name": "taskguard",
@@ -255,7 +280,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "cloneCommand": "git clone https://github.com/wronai/taskguard.git"
+      "pypi": "taskguard",
+      "cloneCommand": "git clone https://github.com/wronai/taskguard.git",
+      "installCommand": "pip install taskguard",
+      "pypi_url": "https://pypi.org/project/taskguard/"
     },
     {
       "name": "weekly",
@@ -266,14 +294,16 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "cloneCommand": "git clone https://github.com/wronai/weekly.git"
+      "pypi": "",
+      "cloneCommand": "git clone https://github.com/wronai/weekly.git",
+      "installCommand": "pip install weekly"
     },
     {
       "name": "www",
       "description": "edge computing LLM for embedded devices such RPI",
       "url": "https://github.com/wronai/www",
       "website": "https://wronai.github.io/www/",
-      "updatedAt": "2025-06-09T17:45:21Z",
+      "updatedAt": "2025-06-09T17:24:42Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",

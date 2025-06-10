@@ -1,5 +1,27 @@
 # Changelog
 
+## [v2025.06.10] - 2025-06-10
+
+### Added
+- Added `formagent`:  ([GitHub](https://github.com/wronai/formagent))
+
+### Changed
+- Updated `airun`: pypi: 'airun' → 'None'
+- Updated `domd`: pypi: 'domd' → 'None'
+- Updated `ellma`: pypi: 'ellma' → 'None'
+- Updated `ellmo`: pypi: '' → 'None'
+- Updated `git2wp`: pypi: 'git2wp' → 'None'
+- Updated `gollm`: pypi: 'gollm' → 'None'
+- Updated `inceptor`: pypi: 'inceptor' → 'None'
+- Updated `llm-demo`: pypi: 'wronai' → 'None'
+- Updated `mdiss`: pypi: 'mdiss' → 'None'
+- Updated `shapi`: pypi: 'shapi' → 'None'
+- Updated `shellguard`: pypi: '' → 'None'
+- Updated `sifu`: pypi: '' → 'None'
+- Updated `spyq`: pypi: 'spyq' → 'None'
+- Updated `taskguard`: pypi: 'taskguard' → 'None'
+- Updated `weekly`: pypi: '' → 'None'
+
 ## [v2025.06.09] - 2025-06-09
 
 ### Changed

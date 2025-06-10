@@ -3,6 +3,23 @@
 ## [v2025.06.10] - 2025-06-10
 
 ### Added
+- Added `follm`: AI Form Automation z Upload ([GitHub](https://github.com/wronai/follm))
+- Added `formap`: web form mapper and filler Automatyczne mapowanie i wypełnianie formularzy internetowych przy użyciu Playwright. ([GitHub](https://github.com/wronai/formap))
+
+### Changed
+- Updated `airun`: pypi: 'None' → 'airun'
+- Updated `domd`: pypi: 'None' → 'domd'
+- Updated `ellma`: pypi: 'None' → 'ellma'
+- Updated `gollm`: pypi: 'None' → 'gollm'
+- Updated `inceptor`: pypi: 'None' → 'inceptor'
+- Updated `llm-demo`: pypi: 'None' → 'wronai'
+- Updated `mdiss`: pypi: 'None' → 'mdiss'
+- Updated `shapi`: pypi: 'None' → 'shapi'
+- Updated `taskguard`: pypi: 'None' → 'taskguard'
+
+## [v2025.06.10] - 2025-06-10
+
+### Added
 - Added `formagent`:  ([GitHub](https://github.com/wronai/formagent))
 
 ### Changed

@@ -21,7 +21,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "cloneCommand": "git clone https://github.com/wronai/airun.git"
+      "pypi": "airun",
+      "cloneCommand": "git clone https://github.com/wronai/airun.git",
+      "installCommand": "pip install airun",
+      "pypi_url": "https://pypi.org/project/airun/"
     },
     {
       "name": "allama",
@@ -79,7 +82,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "cloneCommand": "git clone https://github.com/wronai/domd.git"
+      "pypi": "domd",
+      "cloneCommand": "git clone https://github.com/wronai/domd.git",
+      "installCommand": "pip install domd",
+      "pypi_url": "https://pypi.org/project/domd/"
     },
     {
       "name": "ellma",
@@ -90,7 +96,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "cloneCommand": "git clone https://github.com/wronai/ellma.git"
+      "pypi": "ellma",
+      "cloneCommand": "git clone https://github.com/wronai/ellma.git",
+      "installCommand": "pip install ellma",
+      "pypi_url": "https://pypi.org/project/ellma/"
     },
     {
       "name": "ellmo",
@@ -104,15 +113,40 @@
       "cloneCommand": "git clone https://github.com/wronai/ellmo.git"
     },
     {
+      "name": "follm",
+      "description": "AI Form Automation z Upload",
+      "url": "https://github.com/wronai/follm",
+      "website": "https://wronai.github.io/follm/",
+      "updatedAt": "2025-06-10T11:16:15Z",
+      "isArchived": false,
+      "isFork": false,
+      "language": "JavaScript",
+      "cloneCommand": "git clone https://github.com/wronai/follm.git"
+    },
+    {
       "name": "formagent",
       "description": "",
       "url": "https://github.com/wronai/formagent",
       "website": "https://wronai.github.io/formagent/",
-      "updatedAt": "2025-06-09T22:27:18Z",
+      "updatedAt": "2025-06-10T11:55:11Z",
       "isArchived": false,
       "isFork": false,
       "language": "JavaScript",
       "cloneCommand": "git clone https://github.com/wronai/formagent.git"
+    },
+    {
+      "name": "formap",
+      "description": "web form mapper and filler Automatyczne mapowanie i wype\u0142nianie formularzy internetowych przy u\u017cyciu Playwright.",
+      "url": "https://github.com/wronai/formap",
+      "website": "https://wronai.github.io/formap/",
+      "updatedAt": "2025-06-10T12:05:36Z",
+      "isArchived": false,
+      "isFork": false,
+      "language": "Python",
+      "pypi": "formap",
+      "cloneCommand": "git clone https://github.com/wronai/formap.git",
+      "installCommand": "pip install formap",
+      "pypi_url": "https://pypi.org/project/formap/"
     },
     {
       "name": "git2wp",
@@ -130,11 +164,14 @@
       "description": "goLLM - Go Learn, Lead, Master!  \ud83d\ude80 Intelligent Python code quality guardian with LLM integration, automated TODO management and CHANGELOG generation.",
       "url": "https://github.com/wronai/gollm",
       "website": "https://wronai.github.io/gollm/",
-      "updatedAt": "2025-06-09T17:04:47Z",
+      "updatedAt": "2025-06-10T08:29:15Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "cloneCommand": "git clone https://github.com/wronai/gollm.git"
+      "pypi": "gollm",
+      "cloneCommand": "git clone https://github.com/wronai/gollm.git",
+      "installCommand": "pip install gollm",
+      "pypi_url": "https://pypi.org/project/gollm/"
     },
     {
       "name": "inceptor",
@@ -145,7 +182,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "HTML",
-      "cloneCommand": "git clone https://github.com/wronai/inceptor.git"
+      "pypi": "inceptor",
+      "cloneCommand": "git clone https://github.com/wronai/inceptor.git",
+      "installCommand": "pip install inceptor",
+      "pypi_url": "https://pypi.org/project/inceptor/"
     },
     {
       "name": "llm",
@@ -167,7 +207,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "cloneCommand": "git clone https://github.com/wronai/llm-demo.git"
+      "pypi": "wronai",
+      "cloneCommand": "git clone https://github.com/wronai/llm-demo.git",
+      "installCommand": "pip install llm-demo",
+      "pypi_url": "https://pypi.org/project/wronai/"
     },
     {
       "name": "mdiss",
@@ -178,7 +221,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "cloneCommand": "git clone https://github.com/wronai/mdiss.git"
+      "pypi": "mdiss",
+      "cloneCommand": "git clone https://github.com/wronai/mdiss.git",
+      "installCommand": "pip install mdiss",
+      "pypi_url": "https://pypi.org/project/mdiss/"
     },
     {
       "name": "ollama",
@@ -211,7 +257,10 @@
       "isArchived": false,
       "isFork": false,
       "language": "HTML",
-      "cloneCommand": "git clone https://github.com/wronai/shapi.git"
+      "pypi": "shapi",
+      "cloneCommand": "git clone https://github.com/wronai/shapi.git",
+      "installCommand": "pip install shapi",
+      "pypi_url": "https://pypi.org/project/shapi/"
     },
     {
       "name": "shellguard",
@@ -251,11 +300,14 @@
       "description": "TaskGuard - LLM Task Controller - AI-powered development assistant that controls LLM behavior, enforces best practices, and maintains laser focus through intelligent automation.",
       "url": "https://github.com/wronai/taskguard",
       "website": "https://wronai.github.io/taskguard/",
-      "updatedAt": "2025-06-09T17:04:15Z",
+      "updatedAt": "2025-06-10T08:29:12Z",
       "isArchived": false,
       "isFork": false,
       "language": "Python",
-      "cloneCommand": "git clone https://github.com/wronai/taskguard.git"
+      "pypi": "taskguard",
+      "cloneCommand": "git clone https://github.com/wronai/taskguard.git",
+      "installCommand": "pip install taskguard",
+      "pypi_url": "https://pypi.org/project/taskguard/"
     },
     {
       "name": "weekly",

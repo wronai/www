@@ -1,41 +1,9 @@
 {
-  "name": "wronai-projects-dashboard",
+  "name": "wronai-projects-landing",
   "version": "1.0.0",
-  "private": true,
-  "description": "A static dashboard to showcase WronAI's open source projects with automatic repository analysis.",
-  "homepage": "/www",
-  "scripts": {
-    "start": "serve -s dist -p 3000",
-    "dev": "serve -s src -p 3000",
-    "build": "node scripts/build.js",
-    "preview": "npm run build && serve -s dist -p 3000",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,html,css}\"",
-    "prepare": "husky install"
-  },
-  "keywords": [
-    "wronai",
-    "dashboard",
-    "static-site",
-    "github-pages",
-    "open-source"
-  ],
-  "author": "WronAI Team",
-  "license": "Apache-2.0",
-  "dependencies": {
-    "serve": "^14.2.0"
-  },
-  "devDependencies": {
-    "fs-extra": "^11.3.0",
-    "husky": "^8.0.3",
-    "prettier": "^3.0.0"
-  },
-  "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=9.0.0"
-  },
-  "browserslist": [
-    "last 2 versions",
-    "not dead",
-    "not ie 11"
-  ]
+  "description": "Landing page dla projektów WronAI Agents Platform z codziennym cache z GitHub API",
+  "main": "index.html",
+  "scripts": { "dev": "npx -y serve . -l 8893", "update-cache": "python3 scripts/update_github_cache.py" },
+  "author": "WronAI Agents Platform Team",
+  "license": "MIT"
 }

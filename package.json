@@ -1,9 +1,0 @@
-{
-  "name": "wronai-projects-landing",
-  "version": "1.0.0",
-  "description": "Landing page dla projektów WronAI Agents Platform z codziennym cache z GitHub API",
-  "main": "index.html",
-  "scripts": { "dev": "npx -y serve . -l 8893", "update-cache": "python3 scripts/update_github_cache.py" },
-  "author": "WronAI Agents Platform Team",
-  "license": "MIT"
-}

@@ -1,3 +1,6 @@
-# 🌐 WronAI Agents Platform — Landing Page (`www`)
+# wronai — Projects Hub (Single-File index.php Engine)
 
-Official landing page and interactive projects dashboard for **wronai**.
+Pure single-file PHP landing page and ecosystem dependency hub for .
+
+## Quickstart
+
